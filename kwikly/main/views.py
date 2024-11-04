@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 
+
 def home(request):
     products = Product.objects.all()
     categories = Category.objects.all()
@@ -72,3 +73,9 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'change_password.html', {'form': form})
+
+def store_view(request):
+    # Retrieve stores and categories data to pass to template
+    categories = []  # Replace with query to get categories
+    stores = []      # Replace with query to get stores
+    return render(request, 'store.html', {'categories': categories, 'stores': stores})
