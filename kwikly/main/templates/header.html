@@ -1,0 +1,20 @@
+{% load static %}
+<header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: #f5f5f5;">
+    <div>
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" style="height: 40px;">
+        </a>
+    </div>
+    <div>
+        <span>Shopping cart: ₱57.00</span>
+        {% if user.is_authenticated %}
+            <a href="{% url 'account' %}"> <!-- Link to the new account information page -->
+                <img src="{% static 'images/user_icon.png' %}" alt="User" style="height: 30px; margin-right: 1rem;">
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}">
+                <img src="{% static 'images/user_icon.png' %}" alt="User" style="height: 30px; margin-right: 1rem;">
+            </a>
+        {% endif %}
+    </div>
+</header>

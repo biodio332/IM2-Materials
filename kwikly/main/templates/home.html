@@ -1,0 +1,72 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kwikly - Shopping</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="{% url 'home' %}">Kwikly</a>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+                <button>Search</button>
+            </div>
+            <div class="cart">
+                <span>Shopping cart: ₱57.00</span>
+                <a href="{% url 'login' %}">
+                    <img src="{% static 'images/user_icon.png' %}" alt="User Icon" style="height: 30px; margin-left: 1rem;">
+                </a>    
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <aside class="sidebar">
+            <button class="filter-btn">Filter</button>
+            <div class="categories">
+                <h3>All Categories</h3>
+                <ul>
+                    {% for category in categories %}
+                        <li>
+                            <input type="radio" name="category"> 
+                            {{ category.name }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
+
+        <section class="products">
+            <div class="sorting">
+                <span>52 Results Found</span>
+                <div class="sort-by">
+                    Sort by: 
+                    <select>
+                        <option>Latest</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="product-grid">
+                {% for product in products %}
+                    <div class="product-card">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        <h4>{{ product.name }}</h4>
+                        <p>₱{{ product.price }}</p>
+                        <p>{{ product.category }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</body>
+</html>
