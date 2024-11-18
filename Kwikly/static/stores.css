@@ -17,6 +17,12 @@ header {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.main-content {
+    margin: 0 auto; 
+    max-width: 1200px; 
+    padding: 0 20px; 
+}
+
 .header-container {
     display: flex;
     justify-content: space-between;
@@ -150,4 +156,16 @@ header {
 
 .store-card p {
     color: #666;
+}
+
+/*image section*/
+.featured-image {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.desktop-doorstep-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
 }

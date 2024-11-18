@@ -39,7 +39,7 @@
                             {% if category.image %}
                                 <img src="{{ category.image.url }}" alt="{{ category.name }}">
                             {% else %}
-                                <img src="{% static 'https://i.pinimg.com/736x/b1/bd/4c/b1bd4c48426069a9d0fe9d04cfa34b86.jpg' %}" > <!-- Provide a default image -->
+                                <img src="{% static '' %}" > <!-- Provide a default image -->
                             {% endif %}
                             <h4>{{ category.name }}</h4>
                         </div>
@@ -49,6 +49,11 @@
                 </div>
             </section>
         </div>
+        
+        <!-- New Image Section -->
+        <section class="featured-image">
+        <img src="{% static 'desktop-doorstep-store.png' %}" alt="Featured Image" class="desktop-doorstep-image">
+        </section>
 
         <!-- Stores Section -->
         <section class="stores">
@@ -60,10 +65,10 @@
                         {% if store.image %}
                             <img src="{{ store.image.url }}" alt="{{ store.store_name }}">
                         {% else %}
-                            <img src="{% static 'https://i.pinimg.com/736x/b1/bd/4c/b1bd4c48426069a9d0fe9d04cfa34b86.jpg' %}" alt="Default Store Image"> <!-- Provide a default image -->
+                            <img src="{% static '' %}" alt="Default Store Image"> <!-- Provide a default image -->
                         {% endif %}
                         <h3>{{ store.store_name }}</h3>
-                        <p>{{ store.description|default:"No description available" }}</p>
+                        <p>{{ store.description|default:"" }}</p>
                     </a>
                 </div>
                 {% endfor %}

@@ -80,7 +80,7 @@ def store_view(request):
     return render(request, 'store.html', {'categories': categories, 'stores': stores})
 
 def store_detail(request, store_id):
-    store = get_object_or_404(Store, pk=store_id)
+    store = get_object_or_404(Store, id=store_id)
     return render(request, 'store_detail.html', {'store': store})
 
 #for cart

@@ -89,3 +89,4 @@ class OrderProduct(models.Model):
     def __str__(self):
         return f"Order {self.order.order_id} - Product {self.product.product_name} (Quantity: {self.quantity})"
 
+
