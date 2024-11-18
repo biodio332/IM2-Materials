@@ -1,8 +1,8 @@
 # main/views.py
 from django.http import HttpResponse
 # main/views.py
-from .models import Product, Category
-from django.shortcuts import render, redirect
+from .models import Product, Category, Store
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -75,7 +75,15 @@ def change_password(request):
     return render(request, 'change_password.html', {'form': form})
 
 def store_view(request):
-    # Retrieve stores and categories data to pass to template
-    categories = []  # Replace with query to get categories
-    stores = []      # Replace with query to get stores
+    categories = Category.objects.all()  # Fetch categories from the database
+    stores = Store.objects.all()          # Fetch stores from the database
     return render(request, 'store.html', {'categories': categories, 'stores': stores})
+
+def store_detail(request, store_id):
+    store = get_object_or_404(Store, pk=store_id)
+    return render(request, 'store_detail.html', {'store': store})
+
+#for cart
+def cart(request):
+    # Your cart view logic here
+    return render(request, 'cart.html')

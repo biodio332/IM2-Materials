@@ -31,15 +31,18 @@
         <div class="carousel-wrapper">
             <!-- Carousel Section -->
             <section class="carousel">
-                <h2>Popular Categories</h2>
                 <div class="carousel-container">
                     <button class="carousel-control prev">❮</button>
                     <div class="carousel-inner">
                         {% for category in categories %}
-                            <div class="carousel-item">
+                        <div class="carousel-item">
+                            {% if category.image %}
                                 <img src="{{ category.image.url }}" alt="{{ category.name }}">
-                                <h4>{{ category.name }}</h4>
-                            </div>
+                            {% else %}
+                                <img src="{% static 'https://i.pinimg.com/736x/b1/bd/4c/b1bd4c48426069a9d0fe9d04cfa34b86.jpg' %}" > <!-- Provide a default image -->
+                            {% endif %}
+                            <h4>{{ category.name }}</h4>
+                        </div>
                         {% endfor %}
                     </div>
                     <button class="carousel-control next">❯</button>
@@ -52,13 +55,17 @@
             <h2>Stores</h2>
             <div class="store-grid">
                 {% for store in stores %}
-                    <div class="store-card">
-                        <a href="{% url 'store_detail' store.id %}">
-                            <img src="{{ store.image.url }}" alt="{{ store.name }}">
-                            <h3>{{ store.name }}</h3>
-                            <p>{{ store.description }}</p>
-                        </a>
-                    </div>
+                <div class="store-card">
+                    <a href="{% url 'store_detail' store.store_id %}">
+                        {% if store.image %}
+                            <img src="{{ store.image.url }}" alt="{{ store.store_name }}">
+                        {% else %}
+                            <img src="{% static 'https://i.pinimg.com/736x/b1/bd/4c/b1bd4c48426069a9d0fe9d04cfa34b86.jpg' %}" alt="Default Store Image"> <!-- Provide a default image -->
+                        {% endif %}
+                        <h3>{{ store.store_name }}</h3>
+                        <p>{{ store.description|default:"No description available" }}</p>
+                    </a>
+                </div>
                 {% endfor %}
             </div>
         </section>

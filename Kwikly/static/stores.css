@@ -1,4 +1,15 @@
 /* General Styles */
+/* Basic resets */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
 /* Header */
 header {
     background-color: white;
@@ -41,15 +52,16 @@ header {
     margin-left: 8px;
     cursor: pointer;
 }
+
 .user-section img {
     height: 30px;
 }
 
 /* Carousel Styles */
 .carousel-wrapper {
-    margin: 20px auto; /* Centering the carousel */
-    padding: 0 20px;   /* Optional: Add padding to the sides */
-}
+    margin: 20px auto; 
+    padding: 0 20px;
+} 
 
 .carousel {
     text-align: center;
@@ -71,14 +83,23 @@ header {
 }
 
 .carousel-item {
-    min-width: 100%;
-    transition: transform 0.5s ease;
+    min-width: 100px;
+    margin: 0 15px;
+    text-align: center;
+    transition: transform 0.3s;
 }
 
 .carousel-item img {
-    width: 100%;
-    height: 200px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
+    margin-bottom: 0.5rem;
+    border-radius: 50%;
+}
+
+.carousel-item h4 {
+    font-size: 0.85rem;
+    color: #333;
 }
 
 .carousel-control {
@@ -86,6 +107,13 @@ header {
     border: none;
     font-size: 2rem;
     cursor: pointer;
+    color: #333;
+    padding: 0 10px;
+}
+
+/* Hover effect */
+.carousel-item:hover {
+    transform: scale(1.1);
 }
 
 /* Store Grid Styles */

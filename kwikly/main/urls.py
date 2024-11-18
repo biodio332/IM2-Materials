@@ -12,4 +12,5 @@ urlpatterns = [
     path('account/', views.account_information, name='account'),
     path('account/change_password/', views.change_password, name='change_password'),
     path('store/', views.store_view, name='store'), 
+    path('store/<int:store_id>/', views.store_detail, name='store_detail'),
 ]
