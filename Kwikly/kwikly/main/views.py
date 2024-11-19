@@ -101,3 +101,7 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'change_password.html', {'form': form})
+
+def cart_summary(request):
+    # Your code to render the cart summary
+    return render(request, 'cart_summary.html')
