@@ -35,6 +35,8 @@ class Store(models.Model):
     store_id = models.AutoField(primary_key=True)
     store_name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='store_images/', null=True, blank=True)  # Add image field
+    description = models.TextField(null=True, blank=True)  # Add description field
 
     def __str__(self):
         return self.store_name
@@ -63,7 +65,8 @@ class Order(models.Model):
 class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
     type = models.CharField(max_length=255)
-
+    image = models.ImageField(upload_to='category_images/', null=True, blank=True)
+    
     def __str__(self):
         return self.type
 
@@ -85,4 +88,5 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return f"Order {self.order.order_id} - Product {self.product.product_name} (Quantity: {self.quantity})"
+
 

@@ -31,34 +31,46 @@
         <div class="carousel-wrapper">
             <!-- Carousel Section -->
             <section class="carousel">
-                <h2>Popular Categories</h2>
                 <div class="carousel-container">
                     <button class="carousel-control prev">❮</button>
                     <div class="carousel-inner">
                         {% for category in categories %}
-                            <div class="carousel-item">
+                        <div class="carousel-item">
+                            {% if category.image %}
                                 <img src="{{ category.image.url }}" alt="{{ category.name }}">
-                                <h4>{{ category.name }}</h4>
-                            </div>
+                            {% else %}
+                                <img src="{% static '' %}" > <!-- Provide a default image -->
+                            {% endif %}
+                            <h4>{{ category.name }}</h4>
+                        </div>
                         {% endfor %}
                     </div>
                     <button class="carousel-control next">❯</button>
                 </div>
             </section>
         </div>
+        
+        <!-- New Image Section -->
+        <section class="featured-image">
+        <img src="{% static 'images/desktop-doorstep-store.png' %}" alt="Featured Image" class="desktop-doorstep-image">
+        </section>
 
         <!-- Stores Section -->
         <section class="stores">
             <h2>Stores</h2>
             <div class="store-grid">
                 {% for store in stores %}
-                    <div class="store-card">
-                        <a href="{% url 'store_detail' store.id %}">
-                            <img src="{{ store.image.url }}" alt="{{ store.name }}">
-                            <h3>{{ store.name }}</h3>
-                            <p>{{ store.description }}</p>
-                        </a>
-                    </div>
+                <div class="store-card">
+                    <a href="{% url 'store_detail' store.store_id %}">
+                        {% if store.image %}
+                            <img src="{{ store.image.url }}" alt="{{ store.store_name }}">
+                        {% else %}
+                            <img src="{% static '' %}" alt="Default Store Image"> <!-- Provide a default image -->
+                        {% endif %}
+                        <h3>{{ store.store_name }}</h3>
+                        <p>{{ store.description|default:"" }}</p>
+                    </a>
+                </div>
                 {% endfor %}
             </div>
         </section>
