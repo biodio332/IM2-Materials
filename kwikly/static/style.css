@@ -6,12 +6,8 @@
 }
 
 body {
-<<<<<<< Updated upstream:kwikly/static/style.css
    /*font-family: Arial, sans-serif;*/
-=======
->>>>>>> Stashed changes:Kwikly/kwikly/static/style.css
     background-color: #f5f5f5;
-    font-family: Arial, sans-serif; /* Assuming you'd want a font for readability */
 }
 
 /* Header */
@@ -19,7 +15,6 @@ header {
     background-color: white;
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px; /* Add space below the header */
 }
 
 .header-container {
@@ -63,32 +58,11 @@ header {
     color: #333;
 }
 
-
-/* Store Image Container */
-.image-container {
-    margin: 0 auto; 
-    width: 100%; /* Make it responsive */
-    max-width: 600px; /* Set a maximum width */
-    height: 300px; /* Preferred height */
-    overflow: hidden; /* Hide parts of the image that overflow */
-}
-
-.image-container img {
-    width: 100%; /* Stretch the image to fill the container */
-    height: 100%; /* Make the image fill the container height */
-    object-fit: cover; /* Make sure the image covers the container area without distortion */
-}
-
-.store-details {
-    text-align: center;
-    margin-left: 50px;
-}
-
 /* Main Content */
 .main-content {
     display: flex;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 0 20px;
 }
 
@@ -160,7 +134,7 @@ header {
 }
 
 .product-card img {
-    width: 100%;
+    max-width: 100%;
     height: auto;
     margin-bottom: 10px;
 }
@@ -174,59 +148,4 @@ header {
     color: green;
     font-size: 16px;
     font-weight: bold;
-}
-
-/* Carousel Styles */
-.carousel-wrapper {
-    margin: 20px auto; 
-    max-width: 1200px; 
-    padding: 0 20px;
-} 
-
-.carousel {
-    text-align: center;
-    padding: 20px;
-    background-color: #f8f8f8;
-}
-
-.carousel-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.carousel-inner {
-    display: flex;
-    overflow: hidden;
-    width: 80%;
-    margin: auto;
-}
-
-.carousel-item {
-    min-width: 100px;
-    margin: 0 15px;
-    text-align: center;
-    transition: transform 0.3s;
-}
-
-.carousel-item img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    margin-bottom: 0.5rem;
-    border-radius: 50%;
-}
-
-.carousel-item h4 {
-    font-size: 0.85rem;
-    color: #333;
-}
-
-.carousel-control {
-    background: none;
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-    color: #333;
-    padding: 0 10px;
 }
