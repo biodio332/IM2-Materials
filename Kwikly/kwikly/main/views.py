@@ -1,10 +1,11 @@
 # main/views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash, get_user_model
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
-from .models import Product, Category, Customer
+from .models import Product, Category, Customer, Store
 
 def home(request):
     search_query = request.GET.get('search', None)
@@ -68,14 +69,9 @@ def user_register(request):
         address = request.POST.get("address")
         
         if password == confirm_password:
-            if not Customer.objects.filter(username=username).exists():
-                customer = Customer.objects.create_user(
-                    username=username,
-                    password=password,
-                    name=name,
-                    contact=contact,
-                    address=address
-                )
+            if not User.objects.filter(username=username).exists():
+                user = User.objects.create_user(username=username, password=password)
+                user.save()
                 messages.success(request, "Registration successful. You can now log in.")
                 return redirect("login")
             else:
@@ -101,6 +97,23 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'change_password.html', {'form': form})
+
+def store_view(request):
+    categories = Category.objects.all()  # Fetch categories from the database
+    stores = Store.objects.all()          # Fetch stores from the database
+    return render(request, 'store.html', {'categories': categories, 'stores': stores})
+
+def store_detail(request, store_id):
+    store = get_object_or_404(Store, pk=store_id)
+    products = Product.objects.filter(store=store)
+    categories = Category.objects.all()  # Fetch categories here
+
+    context = {
+        'store': store,
+        'products': products,
+        'categories': categories,  # Pass categories to the template
+    }
+    return render(request, 'home.html', context)
 
 def cart_summary(request):
     # Your code to render the cart summary

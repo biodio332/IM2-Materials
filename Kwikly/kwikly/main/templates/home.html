@@ -5,10 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kwikly - Shopping</title>
+    <title>{{ store.store_name }} - Kwikly</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
+    <!-- Header -->
     <header>
         <div class="header-container">
             <div class="logo">
@@ -32,25 +33,44 @@
         </div>
     </header>
 
-    <div class="main-content">
-        <aside class="sidebar">
-            <form method="get" action="">
-                <button type="submit" class="filter-btn">Filter</button>
-                <div class="categories">
-                    <h3>All Categories</h3>
-                    <ul>
-                        {% for category in categories %}
-                            <li>
-                                <input type="radio" name="category" value="{{ category.type }}" 
-                                       {% if selected_category == category.type %}checked{% endif %}>
-                                {{ category.type }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </form>
-        </aside>
+    <!-- Store Section -->
+    <div class="store-details">
+        <h1>{{ store.store_name }}</h1>
+        {% if store.image %}
+            <div class="image-container">
+                <img src="{{ store.image.url }}" alt="{{ store.store_name }}">
+            </div>
+        {% endif %}
+        <p>{{ store.description|default:"No description available for this store." }}</p>
+    </div>
 
+     <!-- Carousel Container -->
+     <div class="carousel-wrapper">
+        <!-- Carousel Section -->
+        <section class="carousel">
+            <div class="carousel-container">
+                <button class="carousel-control prev">❮</button>
+                <div class="carousel-inner">
+                    {% for category in categories %}
+                    <div class="carousel-item" data-category="{{ category.name }}">
+                        {% if category.image %}
+                            <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                        {% else %}
+                            <img src="{% static '' %}" > <!-- Provide a default image -->
+                        {% endif %}
+                        <h4>{{ category.name }}</h4>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control next">❯</button>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Products Section -->
         <section class="products">
             <div class="sorting">
                 <span>{{ products.count }} Results Found</span>
@@ -63,25 +83,79 @@
                     </select>
                 </form>
             </div>
-            
+
             <div class="product-grid">
                 {% for product in products %}
-                    <div class="product-card">
-                        <img src="{{ product.image.url }}" alt="{{ product.product_name }}">
-                        <h4>{{ product.product_name }}</h4>
-                        <p>₱{{ product.price }}</p>
+                <div class="product-card" data-category="{{ product.category.name }}">
+                    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/default-product.jpg' %}{% endif %}" alt="{{ product.product_name }}">
+                    <h4>{{ product.product_name }}</h4>
+                    <p>₱{{ product.price }}</p>
 
-                        <!-- Add to Cart Form -->
-                        <form method="POST" action="/cart/add/">
-                            {% csrf_token %}
-                            <input type="hidden" name="product_id" value="{{ product.product_id }}">
-                            <button type="submit">Add to Cart</button>
-                        </form>
-                        
-                    </div>
+                    <!-- Add to Cart Form -->
+                    <form method="POST" action="/cart/add/">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ product.product_id }}">
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                </div>
                 {% endfor %}
             </div>
         </section>
     </div>
+
+    <!-- JavaScript for Carousel and Sorting -->
+    <script>
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        const productCards = document.querySelectorAll('.product-card');
+        const sortSelect = document.querySelector('.sort-by select');
+        let currentSlide = 0;
+
+        // Show the selected category's products
+        function filterProductsByCategory(category) {
+            productCards.forEach(card => {
+                const productCategory = card.getAttribute('data-category');
+                if (category === 'All' || productCategory === category) {
+                    card.style.display = 'block';  // Show the product
+                } else {
+                    card.style.display = 'none';  // Hide the product
+                }
+            });
+        }
+
+        // Update the sort dropdown to reflect the selected category
+        function updateSortDropdown(category) {
+            if (category === category) {
+                sortSelect.value = ''; // You can customize to show a specific sort option for the category
+            } else {
+                sortSelect.value = ''; // Default sorting, if needed
+            }
+        }
+
+        // Show the slide based on the carousel index
+        function showSlide(index) {
+            carouselItems.forEach((item, i) => {
+                item.style.transform = `translateX(-${index * 100}%)`;
+            });
+        }
+
+        document.querySelector('.prev').addEventListener('click', () => {
+            currentSlide = (currentSlide > 0) ? currentSlide - 1 : carouselItems.length - 1;
+            showSlide(currentSlide);
+        });
+
+        document.querySelector('.next').addEventListener('click', () => {
+            currentSlide = (currentSlide < carouselItems.length - 1) ? currentSlide + 1 : 0;
+            showSlide(currentSlide);
+        });
+
+        // Handle category clicks on the carousel
+        carouselItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const selectedCategory = item.getAttribute('data-category');
+                filterProductsByCategory(selectedCategory);  // Filter products based on selected category
+                updateSortDropdown(selectedCategory);       // Update the sort dropdown to match the category
+            });
+        });
+    </script>
 </body>
 </html>

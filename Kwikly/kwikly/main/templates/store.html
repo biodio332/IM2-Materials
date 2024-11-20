@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kwikly - Stores</title>
+    <link rel="stylesheet" href="{% static 'stores.css' %}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="{% url 'store' %}">Kwikly</a>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search stores">
+                <button>Search</button>
+            </div>
+            <div class="user-section">
+                <a href="{% url 'login' %}">
+                    <img src="{% static 'images/user_icon.png' %}" alt="User Icon">
+                </a>    
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Carousel Container -->
+        <div class="carousel-wrapper">
+            <!-- Carousel Section -->
+            <section class="carousel">
+                <div class="carousel-container">
+                    <button class="carousel-control prev">❮</button>
+                    <div class="carousel-inner">
+                        {% for category in categories %}
+                        <div class="carousel-item">
+                            {% if category.image %}
+                                <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                            {% else %}
+                                <img src="{% static '' %}" > <!-- Provide a default image -->
+                            {% endif %}
+                            <h4>{{ category.name }}</h4>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control next">❯</button>
+                </div>
+            </section>
+        </div>
+        
+        <!-- New Image Section -->
+        <section class="featured-image">
+        <img src="{% static 'images/desktop-doorstep-store.png' %}" alt="Featured Image" class="desktop-doorstep-image">
+        </section>
+
+        <!-- Stores Section -->
+        <section class="stores">
+            <h2>Stores</h2>
+            <div class="store-grid">
+                {% for store in stores %}
+                <div class="store-card">
+                    <a href="{% url 'store_detail' store.store_id %}">
+                        {% if store.image %}
+                            <img src="{{ store.image.url }}" alt="{{ store.store_name }}">
+                        {% else %}
+                            <img src="{% static '' %}" alt="Default Store Image"> <!-- Provide a default image -->
+                        {% endif %}
+                        <h3>{{ store.store_name }}</h3>
+                        <p>{{ store.description|default:"" }}</p>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // JavaScript for Carousel functionality
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            carouselItems.forEach((item, i) => {
+                item.style.transform = `translateX(-${index * 100}%)`;
+            });
+        }
+
+        document.querySelector('.prev').addEventListener('click', () => {
+            currentSlide = (currentSlide > 0) ? currentSlide - 1 : carouselItems.length - 1;
+            showSlide(currentSlide);
+        });
+
+        document.querySelector('.next').addEventListener('click', () => {
+            currentSlide = (currentSlide < carouselItems.length - 1) ? currentSlide + 1 : 0;
+            showSlide(currentSlide);
+        });
+    </script>
+</body>
+</html>

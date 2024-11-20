@@ -78,3 +78,7 @@ def cart_delete(request, product_id):
 
 def cart_update(request):
     pass
+
+def store_view(request):
+    # Add logic to render a template or perform some action
+    return render(request, 'cart/store.html', {})

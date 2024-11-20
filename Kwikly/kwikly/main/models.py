@@ -48,7 +48,9 @@ class Store(models.Model):
     store_id = models.AutoField(primary_key=True)
     store_name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-
+    image = models.ImageField(upload_to='store_images/', null=True, blank=True)  # Add image field
+    description = models.TextField(null=True, blank=True)  # Add description field
+    
     def __str__(self):
         return self.store_name
 
@@ -75,7 +77,8 @@ class Order(models.Model):
 
 class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
-    type = models.CharField(max_length=255)
+    type = models.CharField(max_length=255)  # Changed `type` to `name` for clarity
+    image = models.ImageField(upload_to='category_images/', null=True, blank=True)
 
     def __str__(self):
         return self.type
@@ -88,8 +91,29 @@ class Product(models.Model):
     store = models.ForeignKey(Store, null=True, on_delete=models.SET_NULL) # Link to Store
     price = models.DecimalField(max_digits=10, decimal_places=2,default=0.00)  # Product price at this store
     image = models.ImageField(upload_to='uploads/products/', default='uploads/products/default.jpg')
+    
     def __str__(self):
         return self.store.store_name if self.store else "No Store"
+
+# Transaction Model
+class Transaction(models.Model):
+    transaction_id = models.AutoField(primary_key=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='transactions')
+    payment_method = models.CharField(max_length=50, choices=[('Cash', 'Cash'), ('Card', 'Card'), ('Online', 'Online')])
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Transaction {self.transaction_id} by {self.customer.username}"
+
+# Order Model
+class Order(models.Model):
+    order_id = models.AutoField(primary_key=True)
+    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE, related_name='orders')
+    store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='orders')
+    order_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Order {self.order_id} - Store: {self.store.store_name}"
 
 class OrderProduct(models.Model):
     order_product_id = models.AutoField(primary_key=True)
