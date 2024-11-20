@@ -1,14 +1,23 @@
 # main/views.py
+<<<<<<< Updated upstream:kwikly/main/views.py
 from django.http import HttpResponse
 # main/views.py
 from .models import Product, Category, Store
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+=======
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash, get_user_model
+>>>>>>> Stashed changes:Kwikly/kwikly/main/views.py
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+<<<<<<< Updated upstream:kwikly/main/views.py
 
+=======
+from .models import Product, Category, Customer, Store
+>>>>>>> Stashed changes:Kwikly/kwikly/main/views.py
 
 def home(request):
     products = Product.objects.all()
@@ -80,6 +89,7 @@ def store_view(request):
     return render(request, 'store.html', {'categories': categories, 'stores': stores})
 
 def store_detail(request, store_id):
+<<<<<<< Updated upstream:kwikly/main/views.py
     store = get_object_or_404(Store, id=store_id)
     return render(request, 'store_detail.html', {'store': store})
 
@@ -87,3 +97,19 @@ def store_detail(request, store_id):
 def cart(request):
     # Your cart view logic here
     return render(request, 'cart.html')
+=======
+    store = get_object_or_404(Store, pk=store_id)
+    products = Product.objects.filter(store=store)
+    categories = Category.objects.all()  # Fetch categories here
+
+    context = {
+        'store': store,
+        'products': products,
+        'categories': categories,  # Pass categories to the template
+    }
+    return render(request, 'home.html', context)
+
+def cart_summary(request):
+    # Your view logic (e.g., pulling cart data from a session or model)
+    return render(request, 'cart_summary.html')  # Replace with your actual template
+>>>>>>> Stashed changes:Kwikly/kwikly/main/views.py
