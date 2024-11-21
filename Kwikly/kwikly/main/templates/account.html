@@ -25,15 +25,24 @@
                 {% else %}
                     <div class="account-info">
                         <h3>Account Information</h3>
+                        <p>User Debug Info: {{ user }}</p>
+                        <p>User ID: {{ user.customer_id }}</p>
                         <p><strong>Name:</strong> {{ user.name }}</p>
                         <p><strong>Contact:</strong> {{ user.contact }}</p>
                         <p><strong>Address:</strong> {{ user.address }}</p>
-                    </div>
-                    
+                        <p><strong>Email:</strong> {{ user.email }}</p>
+                    </div>     
                     <form method="post" action="{% url 'change_password' %}" class="change-password-form">
                         {% csrf_token %}
                         <button type="submit" class="submit-btn">Change Password</button>
                     </form>
+                    {% if user.customer_id %}
+                        <form method="get" action="{% url 'edit_user' user.customer_id %}" class="edit-account-form">
+                            <button type="submit" class="submit-btn">Edit Account</button>
+                        </form>
+                    {% else %}
+                        <p>Error: User ID is missing.</p>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

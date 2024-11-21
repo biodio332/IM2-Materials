@@ -63,6 +63,7 @@ def user_logout(request):
 def user_register(request):
     if request.method == "POST":
         username = request.POST.get("username")
+        email = request.POST.get("email")
         password = request.POST.get("password")
         confirm_password = request.POST.get("confirm_password")
         name = request.POST.get("name")
@@ -73,6 +74,7 @@ def user_register(request):
             if not Customer.objects.filter(username=username).exists():
                 customer = Customer.objects.create_user(
                     username=username,
+                    email=email,
                     password=password,
                     name=name,
                     contact=contact,
@@ -160,6 +162,7 @@ def add_user(request):
 
     if request.method == 'POST':
         username = request.POST.get('username')
+        email = request.POST.get('email') 
         password = request.POST.get('password')
         name = request.POST.get('name')
         contact = request.POST.get('contact')
@@ -170,6 +173,7 @@ def add_user(request):
                 user = get_user_model().objects.create_user(
                     username=username,
                     password=password,
+                    email=email,
                     name=name,
                     contact=contact,
                     address=address,
@@ -182,14 +186,19 @@ def add_user(request):
 
 @login_required
 def edit_user(request, user_id):
-    if not request.user.is_superuser:
-        return redirect("home")
-
     user = get_object_or_404(Customer, customer_id=user_id)
-
+    if request.user.is_superuser:
+        user = Customer.objects.get(customer_id=user_id)
+    elif request.user.customer_id == user_id:
+        # If the logged-in user is the same as the one being edited, allow the edit
+        user = Customer.objects.get(customer_id=user_id)
+    else:
+        # Otherwise, prevent access
+        return redirect('account_information')
     # Handle form submission
     if request.method == "POST":
         user.name = request.POST.get("name")
+        user.email = request.POST.get("email")
         user.contact = request.POST.get("contact")
         user.address = request.POST.get("address")
         user.save()
@@ -198,6 +207,7 @@ def edit_user(request, user_id):
 
     context = {"user": user}
     return render(request, "edit_user.html", context)
+
 
 # Delete User
 @login_required

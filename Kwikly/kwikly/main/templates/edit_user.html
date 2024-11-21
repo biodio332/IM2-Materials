@@ -16,23 +16,26 @@
             {% csrf_token %}
             
             <!-- Name Input -->
-            <label for="name">Name</label>
-            <input type="text" name="name" value="{{ user.name }}" required>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ user.name }}" required>
+            
+            <!-- Email Input -->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" required>
             
             <!-- Contact Input -->
-            <label for="contact">Contact</label>
-            <input type="text" name="contact" value="{{ user.contact }}" required>
+            <label for="contact">Contact:</label>
+            <input type="text" id="contact" name="contact" value="{{ user.contact }}" required>
             
             <!-- Address Input -->
-            <label for="address">Address</label>
-            <input type="text" name="address" value="{{ user.address }}" required>
-
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="4" required>{{ user.address }}</textarea>
+            
             <!-- Submit Button -->
-            <button type="submit" class="submit-btn">Update User</button>
+            <button type="submit" class="submit-btn">Save Changes</button>
         </form>
         
-        <!-- Back Link -->
-        <a href="{% url 'manage_users' %}" class="back-link">Back to Manage Users</a>
+        <a href="{% url 'manage_users' %}" class="back-link">Back to User Management</a>
     </div>
 </body>
 </html>
