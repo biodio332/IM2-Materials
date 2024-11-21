@@ -26,6 +26,7 @@
                 {% if user.is_authenticated %}
                     {% if user.is_superuser %}
                         <a href="{% url 'admin_dashboard' %}" class="admin-dashboard-btn">Admin Dashboard</a>
+                        <a href="{% url 'logout' %}">Logout</a>
                     {% else %}
                         <div class="cart">
                             <a href="/cart/cart/summary">Cart</a>
@@ -65,7 +66,7 @@
                         {% else %}
                             <img src="{% static '' %}" > <!-- Provide a default image -->
                         {% endif %}
-                        <h4>{{ category.name }}</h4>
+                        <h4>{{ category.type }}</h4>
                     </div>
                     {% endfor %}
                 </div>
