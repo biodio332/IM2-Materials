@@ -3,40 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="/media/uploads/products/kwikly.png">
+    <link rel="stylesheet" href="{% static 'login.css' %}">
 </head>
 <body>
     {% include 'header.html' %}
-    <div style="padding: 2rem;">
-        <h2>Register</h2>
-        {% if messages %}
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
-        {% endif %}
-        <form method="post" action="{% url 'register' %}">
-            {% csrf_token %}
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required><br>
+    
+    <!-- Main Content Section -->
+    <div class="center-container">
+        <div class="content-box">
+            <h2>Register</h2>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br>
+            <!-- Display Messages -->
+            {% if messages %}
+                <div class="alert">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
-            <label for="confirm_password">Confirm Password:</label>
-            <input type="password" id="confirm_password" name="confirm_password" required><br>
-            
-            <label for="name">Full Name:</label>
-            <input type="text" id="name" name="name" required><br>
-            
-            <label for="contact">Contact Number:</label>
-            <input type="text" id="contact" name="contact" required><br>
-            
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" required><br>
+            <!-- Registration Form -->
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
 
-            <button type="submit">Register</button>
-        </form>
-        <a href="{% url 'home' %}"><button>Back</button></a>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="contact">Contact Number</label>
+                    <input type="text" id="contact" name="contact" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+
+                <div class="input-group">
+                    <button type="submit" class="submit-btn">Register</button>
+                </div>
+            </form>
+
+            <!-- Back Link -->
+            <div class="back-link">
+                <a href="{% url 'login' %}" class="register-btn">Back</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>

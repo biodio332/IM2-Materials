@@ -226,3 +226,8 @@ header {
     color: #333;
     padding: 0 10px;
 }
+
+/* Hover effect */
+.carousel-item:hover {
+    transform: scale(1.1);
+}

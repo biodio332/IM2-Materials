@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/media/uploads/products/kwikly.png">
+    <title>Admin Dashboard</title>
+
+    <!-- Link to external stylesheet -->
+    <link rel="stylesheet" href="{% static 'admin_dashboard.css' %}">
+</head>
+
+<body>
+    <!-- Include reusable header -->
+    {% include 'header.html' %}
+
+    <!-- Main container -->
+    <div class="center-container">
+        <h2>Admin Dashboard</h2>
+        <p>Welcome, {{ user.username }}!</p>
+
+        <!-- Statistics Section -->
+        <div class="admin-stats">
+            <h3>Statistics</h3>
+            <p><strong>Total Users:</strong> {{ user_count }}</p>
+            <p><strong>Total Products:</strong> {{ product_count }}</p>
+            <p><strong>Total Stores:</strong> {{ store_count }}</p>
+        </div>
+
+        <!-- Actions Section -->
+        <div class="admin-actions">
+            <h3>Actions</h3>
+            <ul>
+                <li><a href="{% url 'manage_users' %}">Manage Users</a></li>
+                <li><a href="{% url 'manage_products' %}">Manage Products</a></li>
+                <li><a href="{% url 'manage_stores' %}">Manage Stores</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

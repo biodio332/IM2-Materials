@@ -1,0 +1,138 @@
+/* Table Container */
+.table-container {
+    margin-top: 30px;
+    background-color: #fff; /* Adds a clean background around the table */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+table th, table td {
+    padding: 15px 20px;
+    text-align: left;
+    border: 1px solid #ddd; /* Adds subtle borders to the table cells */
+    border-radius: 4px;
+}
+
+table th {
+    background-color: #4CAF50; /* Green background for headers */
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.1rem;
+    text-transform: uppercase; /* Capitalizes table headers */
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alternating row colors for better readability */
+}
+
+table tr:hover {
+    background-color: #e9f7e7; /* Light green hover effect for rows */
+}
+
+table td {
+    color: #333;
+}
+
+table td a {
+    color: #4CAF50; /* Matching links with header color */
+    text-decoration: none;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+table td a:hover {
+    background-color: #e0f5e0; /* Light green background on hover */
+    text-decoration: underline;
+}
+
+/* Edit and Delete Buttons */
+.edit-btn {
+    background-color: #007BFF; /* Blue color for "Edit" */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.delete-btn {
+    background-color: #dc3545; /* Red color for "Delete" */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Back Link */
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: green;
+    text-decoration: none;
+    font-weight: bold;
+    transition: text-decoration 0.3s ease;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.add-user-btn {
+    display: inline-block;
+    background-color: #4CAF50; /* Green color to match the page theme */
+    color: white;
+    padding: 12px 25px; /* Bigger padding for a more prominent button */
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added smooth transition */
+    margin-bottom: 20px; /* Spacing below the button */
+    text-align: center;
+}
+
+.add-user-btn:hover {
+    background-color: #45a049; /* Slightly darker green on hover */
+    transform: translateY(-3px); /* Slight lift effect on hover */
+}
+
+.add-user-btn:active {
+    background-color: #3c9e42; /* Darker green on click */
+    transform: translateY(0); /* Reset the hover effect when clicked */
+}
+
+.add-user-btn:focus {
+    outline: none; /* Removes the outline on focus */
+    box-shadow: 0 0 5px rgba(0, 128, 0, 0.5); /* Subtle green glow when focused */
+}
+
+.alert {
+    background-color: #ffdddd;
+    color: #d8000c;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}

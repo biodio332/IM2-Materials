@@ -3,24 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Account Information</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="/media/uploads/products/kwikly.png">
+    <link rel="stylesheet" href="{% static 'account.css' %}">
 </head>
 <body>
     {% include 'header.html' %}
-    <div style="padding: 2rem;">
-        <h2>Account Information</h2>
-        <p><strong>Username:</strong> {{ user.username }}</p>
-        <p><strong>Name:</strong> {{ user.name }}</p>
-        <p><strong>Contact:</strong> {{ user.contact }}</p>
-        <p><strong>Address:</strong> {{ user.address }}</p>
-        
-        
-        <form method="post" action="{% url 'change_password' %}">
-            {% csrf_token %}
-           
+    <div class="center-container">
+        <div class="content-box">
+            <h2>Account Information</h2>
             
-            <button type="submit">Change Password</button>
-        </form>
+            <div class="user-info">
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                
+                {% if user.is_superuser %}
+                    <div class="admin-info">
+                        <h3>Admin Information</h3>
+                        <p><strong>Admin Privileges:</strong> Full access to manage users, products, and stores.</p>
+                        <p><strong>Staff Status:</strong> {{ user.is_staff|yesno:"Yes,No" }}</p>
+                        <p><strong>Superuser Status:</strong> {{ user.is_superuser|yesno:"Yes,No" }}</p>
+                    </div>
+                {% else %}
+                    <div class="account-info">
+                        <h3>Account Information</h3>
+                        <p><strong>Name:</strong> {{ user.name }}</p>
+                        <p><strong>Contact:</strong> {{ user.contact }}</p>
+                        <p><strong>Address:</strong> {{ user.address }}</p>
+                    </div>
+                    
+                    <form method="post" action="{% url 'change_password' %}" class="change-password-form">
+                        {% csrf_token %}
+                        <button type="submit" class="submit-btn">Change Password</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
     </div>
 </body>
 </html>
