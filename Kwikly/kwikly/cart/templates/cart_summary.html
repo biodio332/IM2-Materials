@@ -64,16 +64,33 @@
         .delete-btn:hover {
             background-color: #c82333;
         }
+        .update-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .update-btn:hover {
+            background-color: #218838;
+        }
+        input[type="number"] {
+            width: 50px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Shopping Cart</h1>
+    
         <table>
             <thead>
                 <tr>
                     <th>Product</th>
                     <th>Price</th>
+                    <th>Quantity</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -82,6 +99,14 @@
                     <tr>
                         <td>{{ item.product.product_name }}</td>
                         <td>${{ item.product.price }}</td>
+                        <td>
+                            <!-- Form to update quantity -->
+                            <form method="POST" action="{% url 'cart:cart_update' item.product.product_id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                                <button type="submit" class="update-btn">Update</button>
+                            </form>
+                        </td>
                         <td>
                             <!-- Form to delete the product -->
                             <form method="POST" action="{% url 'cart:cart_delete' item.product.product_id %}" style="display:inline;">
@@ -92,13 +117,19 @@
                     </tr>
                 {% empty %}
                     <tr>
-                        <td colspan="3">Your cart is empty.</td>
+                        <td colspan="4">Your cart is empty.</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+    
+        <div class="cart-summary">
+            <h3>Cart Summary</h3>
+            <p>Total Quantity: {{ total_quantity }}</p>
+            <p>Total Price: Pesos {{ total_price }}</p>
+        </div>
+    
         <div class="actions">
-            <!-- Button for home page -->
             <a href="{% url 'home' %}">
                 <button>Back to Home</button>
             </a>
