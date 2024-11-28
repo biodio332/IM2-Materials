@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+        /* Sidebar Styles */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 20%;
+        background-color: lightgreen;
+        overflow-x: hidden;
+        padding-top: 20px;
+        border-right: 1px solid #ddd;
+    }
+
+    .sidebar .sidebar-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        padding-left: 20px;
+    }
+
+    .sidebar .sidebar-item {
+        display: block;
+        color: #000;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .sidebar .sidebar-item:hover {
+        background-color: white;
+    }
+
+</style>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h3 class="sidebar-title">Kwikly Dashboard</h3>
+    <a href="{% url 'admin_dashboard' %}" class="sidebar-item">Dashboard</a>
+    <a href="{% url 'manage_users' %}" class="sidebar-item">Manage Users</a>
+    <a href="{% url 'manage_products' %}" class="sidebar-item">Manage Products</a>
+    <a href="{% url 'manage_stores' %}" class="sidebar-item">Manage Stores</a>
+    <a href="{% url 'logout' %}" class="sidebar-item">Logout</a>
+</div>
+</body>

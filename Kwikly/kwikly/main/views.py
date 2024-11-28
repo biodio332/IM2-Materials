@@ -186,7 +186,7 @@ def add_user(request):
                 return redirect('manage_users')  # Redirect to manage users page after success
             except Exception as e:
                 messages.error(request, f"Error creating user: {e}")
-    return render(request, 'add_user.html')
+    return render(request, 'components/add_user.html')
 
 @login_required
 def edit_user(request, user_id):
