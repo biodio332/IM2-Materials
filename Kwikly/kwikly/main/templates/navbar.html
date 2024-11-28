@@ -1,0 +1,150 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kwikly</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo a {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: green;
+            text-decoration: none;
+        }
+
+        .login a {
+            text-decoration: none;
+            color: white; 
+            font-weight: bold;
+        }
+
+        .login button {
+            background-color: green;
+            border: none;
+            padding: 8px 16px;
+            margin-left: 8px;
+            cursor: pointer;
+            border-radius: 20px; 
+        }
+
+        .dashboard a {
+            text-decoration: none;
+            color: white; 
+            font-weight: bold;
+        }
+
+        .dashboard button {
+            background-color: green;
+            border: none;
+            padding: 8px 16px;
+            margin-left: 8px;
+            cursor: pointer;
+            border-radius: 20px; 
+        }
+
+        .cart a {
+            text-decoration: none;
+            color: white; 
+            font-weight: bold;
+        }
+
+        .cart button {
+            background-color: green;
+            border: none;
+            padding: 8px 16px;
+            margin-left: 8px;
+            cursor: pointer;
+            border-radius: 20px; 
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        .search-bar button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin-left: 8px;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .user-section img {
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="{% url 'store' %}">Kwikly</a>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for products, store, and more">
+                <button>Search</button>
+            </div>
+            <div class="user-actions">  
+                {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                    <div class="dashboard">
+                        <button><a href="{% url 'admin_dashboard' %}" class="admin-dashboard-btn">Admin Dashboard</a></button>
+                        <button><a href="{% url 'logout' %}">Logout</a></button>
+                    </div>
+                    {% else %}
+                        <div class="cart">
+                            <button><a href="/cart/cart/summary">Cart</a></button>
+                            <button><a href="{% url 'account' %}">Account</a></button>
+                            <button><a href="{% url 'logout' %}">Logout</a></button>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="login">
+                        <button><a href="{% url 'login' %}">Login</a></button>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+</body>
+</html>

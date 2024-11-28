@@ -75,7 +75,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <main class="main-content">
         <section class="products">
             <div class="sorting">
                 <span>{{ products.count }} Results Found</span>
@@ -106,7 +106,9 @@
                 {% endfor %}
             </div>
         </section>
-    </div>
+    </main>
+
+    <footer> {% include "footer.html" %} </footer>
 
     <!-- JavaScript for Carousel -->
     <script>
