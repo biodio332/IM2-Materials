@@ -117,7 +117,7 @@ def admin_dashboard(request):
         return redirect("home")  # Redirect non-superusers to home
 
     # Fetch any relevant admin-specific data
-    user_count = Customer.objects.count()
+    user_count = Customer.objects.filter(is_superuser=False).count()
     product_count = Product.objects.count()
     store_count = Store.objects.count()
 
@@ -136,7 +136,7 @@ def manage_users(request):
 
     users = Customer.objects.exclude(is_superuser=True)  # Exclude superusers from the list
     context = {"users": users}
-    return render(request, "manage_users.html", context)
+    return render(request, "components/manage_users.html", context)
 
 # Manage Products
 @login_required
@@ -146,7 +146,7 @@ def manage_products(request):
 
     products = Product.objects.all()
     context = {"products": products}
-    return render(request, "manage_products.html", context)
+    return render(request, "components/manage_products.html", context)
 
 # Manage Stores
 @login_required
@@ -156,7 +156,7 @@ def manage_stores(request):
 
     stores = Store.objects.all()
     context = {"stores": stores}
-    return render(request, "manage_stores.html", context)
+    return render(request, "components/manage_stores.html", context)
 
 # Add User View
 @login_required
@@ -222,7 +222,7 @@ def delete_user(request, user_id):
     user = get_object_or_404(Customer, customer_id=user_id)
     user.delete()
     messages.success(request, f"User {user.username} deleted successfully.")
-    return redirect("manage_users")
+    return redirect("components/manage_users")
 
 @login_required
 def manage_products(request):
@@ -236,7 +236,7 @@ def manage_products(request):
         'products': products,
     }
 
-    return render(request, 'manage_products.html', context)
+    return render(request, 'components/manage_products.html', context)
 
 # Add Product View
 @login_required
@@ -301,7 +301,7 @@ def add_product(request):
         'stores': stores,
     }
 
-    return render(request, 'add_product.html', context)
+    return render(request, 'components/add_product.html', context)
 
 
 
@@ -346,7 +346,7 @@ def edit_product(request, product_id):
         'stores': stores,
     }
 
-    return render(request, 'edit_product.html', context)
+    return render(request, 'components/edit_product.html', context)
 
 
 @login_required
@@ -372,7 +372,7 @@ def manage_stores(request):
     context = {
         'stores': stores,
     }
-    return render(request, 'manage_stores.html', context)
+    return render(request, 'components/manage_stores.html', context)
 
 @login_required
 def add_store(request):
@@ -392,7 +392,7 @@ def add_store(request):
         messages.success(request, f"Store {store.store_name} added successfully.")
         return redirect('manage_stores')
 
-    return render(request, 'add_store.html')
+    return render(request, 'components/add_store.html')
 
 @login_required
 def edit_store(request, store_id):
@@ -413,7 +413,7 @@ def edit_store(request, store_id):
         'store': store,
     }
 
-    return render(request, 'edit_store.html', context)
+    return render(request, 'components/edit_store.html', context)
 
 @login_required
 def delete_store(request, store_id):

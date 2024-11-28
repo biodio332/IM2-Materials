@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Product: {{ product.product_name }}</title>
+    <link rel="stylesheet" href="{% static 'edit_style.css' %}">
+    <link rel="icon" type="image/x-icon" href="/media/uploads/products/kwikly.png">
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="center-container">
+        <h2>Edit Product: {{ product.product_name }}</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Product Name Input -->
+            <label for="product_name">Product Name</label>
+            <input type="text" id="product_name" name="product_name" value="{{ product.product_name }}" required>
+            
+            <!-- Price Input -->
+            <label for="price">Price</label>
+            <input type="text" id="price" name="price" value="{{ product.price }}" required>
+            
+            <!-- Category Dropdown -->
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+                {% for category in categories %}
+                    <option value="{{ category.category_id }}" {% if category == product.category %}selected{% endif %}>
+                        {{ category.type }}
+                    </option>
+                {% endfor %}
+            </select>
+            
+            <!-- Store Dropdown -->
+            <label for="store">Store</label>
+            <select id="store" name="store" required>
+                {% for store in stores %}
+                    <option value="{{ store.store_id }}" {% if store == product.store %}selected{% endif %}>
+                        {{ store.store_name }}
+                    </option>
+                {% endfor %}
+            </select>
+            
+            <!-- Image Upload -->
+            <label for="image">Image</label>
+            <input type="file" id="image" name="image">
+            
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Save Changes</button>
+        </form>
+
+        <!-- Back Link -->
+        <a href="{% url 'manage_products' %}" class="back-link">Back to Product Management</a>
+    </div>
+</body>
+</html>

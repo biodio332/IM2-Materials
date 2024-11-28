@@ -1,4 +1,6 @@
-/* General Reset */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -6,8 +8,12 @@
 }
 
 body {
-    background-color: #f5f5f5;
-    font-family: Arial, sans-serif; /* Assuming you'd want a font for readability */
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, .logo, .header-container a {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
 }
 
 /* Header */
@@ -15,7 +21,6 @@ header {
     background-color: white;
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px; /* Add space below the header */
 }
 
 .header-container {
@@ -26,86 +31,6 @@ header {
     margin: 0 auto;
     padding: 0 20px;
 }
-
-.logo a {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: green;
-    text-decoration: none;
-}
-
-.search-bar {
-    display: flex;
-    align-items: center;
-}
-
-.search-bar input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.search-bar button {
-    background-color: green;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    margin-left: 8px;
-    cursor: pointer;
-    border-radius: 20px;
-    font-weight: bold;
-}
-
-.login a {
-    text-decoration: none;
-    color: white; 
-    font-weight: bold;
-}
-
-.login button {
-    background-color: green;
-    border: none;
-    padding: 8px 16px;
-    margin-left: 8px;
-    cursor: pointer;
-    border-radius: 20px; 
-}
-
-.dashboard a {
-    text-decoration: none;
-    color: white; 
-    font-weight: bold;
-}
-
-.dashboard button {
-    background-color: green;
-    border: none;
-    padding: 8px 16px;
-    margin-left: 8px;
-    cursor: pointer;
-    border-radius: 20px; 
-}
-
-.cart a {
-    text-decoration: none;
-    color: white; 
-    font-weight: bold;
-}
-
-.cart button {
-    background-color: green;
-    border: none;
-    padding: 8px 16px;
-    margin-left: 8px;
-    cursor: pointer;
-    border-radius: 20px; 
-}
-
-.cart span {
-    font-size: 16px;
-    color: #333;
-}
-
 
 /* Store Image Container */
 .image-container {
@@ -125,6 +50,7 @@ header {
 .store-details {
     text-align: center;
     margin-left: 50px;
+    margin-top: 50px;
 }
 
 /* Main Content */

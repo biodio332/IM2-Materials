@@ -29,7 +29,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -41,52 +41,29 @@
             text-decoration: none;
         }
 
-        .login a {
+        .login a, .dashboard a, .cart a {
             text-decoration: none;
             color: white; 
             font-weight: bold;
         }
 
-        .login button {
+        /* Style the button as a link */
+        .login button, .dashboard button, .cart button {
             background-color: green;
             border: none;
             padding: 8px 16px;
             margin-left: 8px;
             cursor: pointer;
-            border-radius: 20px; 
-        }
-
-        .dashboard a {
-            text-decoration: none;
-            color: white; 
+            border-radius: 20px;
             font-weight: bold;
+            color: white;
         }
 
-        .dashboard button {
-            background-color: green;
-            border: none;
-            padding: 8px 16px;
-            margin-left: 8px;
-            cursor: pointer;
-            border-radius: 20px; 
-        }
-
-        .cart a {
+        .login a, .dashboard a, .cart a {
+            display: inline-block;
             text-decoration: none;
-            color: white; 
-            font-weight: bold;
         }
 
-        .cart button {
-            background-color: green;
-            border: none;
-            padding: 8px 16px;
-            margin-left: 8px;
-            cursor: pointer;
-            border-radius: 20px; 
-        }
-
-        /* Search Bar */
         .search-bar {
             display: flex;
             align-items: center;
@@ -108,10 +85,6 @@
             border-radius: 20px;
             font-weight: bold;
         }
-
-        .user-section img {
-            height: 30px;
-        }
     </style>
 </head>
 <body>
@@ -128,19 +101,19 @@
                 {% if user.is_authenticated %}
                     {% if user.is_superuser %}
                     <div class="dashboard">
-                        <button><a href="{% url 'admin_dashboard' %}" class="admin-dashboard-btn">Admin Dashboard</a></button>
-                        <button><a href="{% url 'logout' %}">Logout</a></button>
+                        <a href="{% url 'admin_dashboard' %}"><button>Admin Dashboard</button></a>
+                        <a href="{% url 'logout' %}"><button>Logout</button></a>
                     </div>
                     {% else %}
                         <div class="cart">
-                            <button><a href="/cart/cart/summary">Cart</a></button>
-                            <button><a href="{% url 'account' %}">Account</a></button>
-                            <button><a href="{% url 'logout' %}">Logout</a></button>
+                            <a href="/cart/cart/summary"><button>Cart</button></a>
+                            <a href="{% url 'account' %}"><button>Account</button></a>
+                            <a href="{% url 'logout' %}"><button>Logout</button></a>
                         </div>
                     {% endif %}
                 {% else %}
                     <div class="login">
-                        <button><a href="{% url 'login' %}">Login</a></button>
+                        <a href="{% url 'login' %}"><button>Login</button></a>
                     </div>
                 {% endif %}
             </div>

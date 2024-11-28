@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 /* General Styles */
 /* Basic resets */
 * {
@@ -7,7 +9,7 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Header */
@@ -31,82 +33,6 @@ header {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-}
-
-.logo a {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: green;
-    text-decoration: none;
-}
-
-.login a {
-    text-decoration: none;
-    color: white; 
-    font-weight: bold;
-}
-
-.login button {
-    background-color: green;
-    border: none;
-    padding: 8px 16px;
-    margin-left: 8px;
-    cursor: pointer;
-    border-radius: 20px; 
-}
-
-.dashboard a {
-    text-decoration: none;
-    color: white; 
-    font-weight: bold;
-}
-
-.dashboard button {
-    background-color: green;
-    border: none;
-    padding: 8px 16px;
-    margin-left: 8px;
-    cursor: pointer;
-    border-radius: 20px; 
-}
-
-.cart a {
-    text-decoration: none;
-    color: white; 
-    font-weight: bold;
-}
-
-.cart button {
-    background-color: green;
-    border: none;
-    padding: 8px 16px;
-    margin-left: 8px;
-    cursor: pointer;
-    border-radius: 20px; 
-}
-
-/*search bar*/ 
-.search-bar {
-    display: flex;
-    align-items: center;
-}
-
-.search-bar input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    
-}
-
-.search-bar button {
-    background-color: green;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    margin-left: 8px;
-    cursor: pointer;
-    border-radius: 20px;
-    font-weight: bold;
 }
 
 .user-section img {

@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit User</title>
+    <link rel="icon" type="image/x-icon" href="/media/uploads/products/kwikly.png">
+    <link rel="stylesheet" href="{% static 'edit_style.css' %}">
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="center-container">
+        <h2>Edit User: {{ user.username }}</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <!-- Name Input -->
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ user.name }}" required>
+            
+            <!-- Email Input -->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" required>
+            
+            <!-- Contact Input -->
+            <label for="contact">Contact:</label>
+            <input type="text" id="contact" name="contact" value="{{ user.contact }}" required>
+            
+            <!-- Address Input -->
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="4" required>{{ user.address }}</textarea>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Save Changes</button>
+        </form>
+        
+        <a href="{% url 'manage_users' %}" class="back-link">Back to User Management</a>
+    </div>
+</body>
+</html>
