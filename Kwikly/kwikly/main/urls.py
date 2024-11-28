@@ -1,6 +1,7 @@
 from django.urls import path, include
 from . import views
 from django.urls import include
+
 urlpatterns = [
     path('', views.store_view, name='store'),
     path('products/',views.home,name='home'),
@@ -26,4 +27,5 @@ urlpatterns = [
     path('add_store/', views.add_store, name='add_store'),
     path('edit_store/<int:store_id>/', views.edit_store, name='edit_store'),
     path('delete_store/<int:store_id>/', views.delete_store, name='delete_store'),
+    path('add/', views.cart_add, name='cart_add'),
 ]

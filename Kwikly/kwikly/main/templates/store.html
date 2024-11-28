@@ -15,23 +15,27 @@
                 <a href="{% url 'store' %}">Kwikly</a>
             </div>
             <div class="search-bar">
-                <input type="text" placeholder="Search stores">
+                <input type="text" placeholder="Search for products, store, and more">
                 <button>Search</button>
             </div>
             <div class="user-actions">  
                 {% if user.is_authenticated %}
                     {% if user.is_superuser %}
-                        <a href="{% url 'admin_dashboard' %}" class="admin-dashboard-btn">Admin Dashboard</a>
-                        <a href="{% url 'logout' %}">Logout</a>
+                    <div class="dashboard">
+                        <button><a href="{% url 'admin_dashboard' %}" class="admin-dashboard-btn">Admin Dashboard</a></button>
+                        <button><a href="{% url 'logout' %}">Logout</a></button>
+                    </div>
                     {% else %}
                         <div class="cart">
-                            <a href="/cart/cart/summary">Cart</a>
-                            <a href="{% url 'account' %}">Account</a>
-                            <a href="{% url 'logout' %}">Logout</a>
+                            <button><a href="/cart/cart/summary">Cart</a></button>
+                            <button><a href="{% url 'account' %}">Account</a></button>
+                            <button><a href="{% url 'logout' %}">Logout</a></button>
                         </div>
                     {% endif %}
                 {% else %}
-                    <a href="{% url 'login' %}">Login</a>
+                    <div class="login">
+                        <button><a href="{% url 'login' %}">Login</a></button>
+                    </div>
                 {% endif %}
             </div>
         </div>
@@ -68,7 +72,7 @@
 
         <!-- Stores Section -->
         <section class="stores">
-            <h2>Stores</h2>
+            <h1>Stores Around You</h1>
             <div class="store-grid">
                 {% for store in stores %}
                 <div class="store-card">
@@ -86,6 +90,11 @@
             </div>
         </section>
     </main>
+
+    <footer>
+        {% block content %}
+        {% endblock %}
+    </footer>
 
     <script>
         // JavaScript for Carousel functionality

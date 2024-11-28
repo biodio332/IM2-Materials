@@ -9,6 +9,7 @@ from django.urls import include
 from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('cart/', include('cart.urls')),
     path('', views.store_view, name='store'),
     path('products/',views.home,name='home'),
     path("login/", views.user_login, name="login"),
@@ -33,4 +34,5 @@ urlpatterns = [
     path('add_store/', views.add_store, name='add_store'),
     path('edit_store/<int:store_id>/', views.edit_store, name='edit_store'),
     path('delete_store/<int:store_id>/', views.delete_store, name='delete_store'),
+    path('add/', views.cart_add, name='cart_add'),
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

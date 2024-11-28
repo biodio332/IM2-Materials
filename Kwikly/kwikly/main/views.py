@@ -8,18 +8,21 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .models import Product, Category, Customer, Store
 
 def home(request):
-    search_query = request.GET.get('search', None)
-    sort_option = request.GET.get('sort', None)
-    selected_category = request.GET.get('category', None)
+    search_query = request.GET.get('search', '').strip()  # Use empty string as default
+    sort_option = request.GET.get('sort', '').strip()
+    selected_category = request.GET.get('category', '').strip()
     
     products = Product.objects.all()
     
+    # Filter by category only if a valid category is provided
     if selected_category:
-        products = products.filter(category__type=selected_category)
+        products = products.filter(category__name=selected_category)  # Adjust as per your model
 
+    # Filter by search query only if a search term is provided
     if search_query:
         products = products.filter(product_name__icontains=search_query)
     
+    # Sort products
     if sort_option == 'low_to_high':
         products = products.order_by('price')
     elif sort_option == 'high_to_low':
@@ -32,9 +35,10 @@ def home(request):
         'categories': categories,
         'sort_option': sort_option,
         'selected_category': selected_category,
-        'search_query': search_query, 
+        'search_query': search_query,
     }
     return render(request, 'home.html', context)
+
 
 
 def user_login(request):
@@ -446,3 +450,27 @@ def cart_summary(request):
     return render(request, 'cart_summary.html')
 
 
+def cart_add(request):
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        if product_id:
+            # Get the product object based on the provided product_id
+            product = get_object_or_404(Product, product_id=product_id)
+
+            # Retrieve the cart from the session, or initialize an empty cart
+            cart = request.session.get('cart', {})
+
+            # If the product is already in the cart, increment its quantity
+            if product_id in cart:
+                cart[product_id] += 1
+            else:
+                # Otherwise, add it to the cart with quantity 1
+                cart[product_id] = 1
+
+            # Save the cart back to the session
+            request.session['cart'] = cart
+
+        # Redirect back to the cart summary page after adding the product
+        return redirect('cart:cart_summary')
+    else:
+        return redirect('cart:cart_summary')
