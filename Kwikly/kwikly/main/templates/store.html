@@ -12,25 +12,22 @@
     {% include 'components/navbar.html' %}
 
     <main class="main-content">
-        <!-- Carousel Container -->
-        <div class="carousel-wrapper">
-            <!-- Carousel Section -->
-            <section class="carousel">
-                <div class="carousel-container">
-                    <button class="carousel-control prev">❮</button>
-                    <div class="carousel-inner">
-                        {% for category in categories %}
-                        <div class="carousel-item">
-                            {% if category.image %}
-                                <img src="{{ category.image.url }}" alt="{{ category.name }}">
+        <!-- Ad Carousel Section -->
+        <div class="ad-carousel-wrapper">
+            <section class="ad-carousel">
+                <div class="ad-carousel-container">
+                    <div class="ad-carousel-inner">
+                        {% for ad in ads %}
+                        <div class="ad-carousel-item">
+                            {% if ad.image %}
+                                <img src="{{ ad.image.url }}" alt="Ad for {{ ad.name }}">
                             {% else %}
-                                <img src="{% static '' %}" > <!-- Provide a default image -->
+                                <img src="{% static 'images/default-ad.jpg' %}" alt="Default Ad">
                             {% endif %}
-                            <h4>{{ category.type }}</h4>
+                            <p>{{ ad.description|default:"" }}</p>
                         </div>
                         {% endfor %}
                     </div>
-                    <button class="carousel-control next">❯</button>
                 </div>
             </section>
         </div>
@@ -66,25 +63,18 @@
     </footer>
 
     <script>
-        // JavaScript for Carousel functionality
-        const carouselItems = document.querySelectorAll('.carousel-item');
-        let currentSlide = 0;
+        // JavaScript for automatic Ad Carousel sliding
+        const adItems = document.querySelectorAll('.ad-carousel-item');
+        const adInner = document.querySelector('.ad-carousel-inner');
+        let currentAdIndex = 0;
 
-        function showSlide(index) {
-            carouselItems.forEach((item, i) => {
-                item.style.transform = `translateX(-${index * 100}%)`;
-            });
+        function slideAds() {
+            currentAdIndex = (currentAdIndex + 1) % adItems.length; // Loop back to the start
+            adInner.style.transform = `translateX(-${currentAdIndex * 100}%)`;
         }
 
-        document.querySelector('.prev').addEventListener('click', () => {
-            currentSlide = (currentSlide > 0) ? currentSlide - 1 : carouselItems.length - 1;
-            showSlide(currentSlide);
-        });
-
-        document.querySelector('.next').addEventListener('click', () => {
-            currentSlide = (currentSlide < carouselItems.length - 1) ? currentSlide + 1 : 0;
-            showSlide(currentSlide);
-        });
+        // Slide every 4 seconds
+        setInterval(slideAds, 4000);
     </script>
 </body>
 </html>

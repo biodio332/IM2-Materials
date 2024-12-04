@@ -40,57 +40,64 @@ header {
 }
 
 /* Carousel Styles */
-.carousel-wrapper {
-    margin: 20px auto; 
-    padding: 0 20px;
-} 
+.ad-carousel-wrapper {
+    margin: 0 auto;
+    max-width: 100%; /* Full width */
+    padding: 0;
+}
 
-.carousel {
+.ad-carousel {
     text-align: center;
-    padding: 20px;
-    background-color: #f8f8f8;
+    background-color: #f9f9f9;
 }
 
-.carousel-container {
+.ad-carousel-container {
+    overflow: hidden; /* Hide content that goes outside */
+    width: 100%; /* Ensure the container takes full width */
+}
+
+.ad-carousel-inner {
     display: flex;
-    align-items: center;
-    position: relative;
+    transition: transform 0.5s ease-in-out;
+    width: 100%; /* Fill the container */
 }
 
-.carousel-inner {
-    display: flex;
-    overflow: hidden;
-    width: 80%;
-    margin: auto;
-}
-
-.carousel-item {
-    min-width: 100px;
-    margin: 0 15px;
+.ad-carousel-item {
+    flex: 0 0 100%; /* Ensure each ad takes the full width */
     text-align: center;
-    transition: transform 0.3s;
+    padding: 0; /* Remove unnecessary padding */
 }
 
-.carousel-item img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    margin-bottom: 0.5rem;
-    border-radius: 50%;
+.ad-carousel-item img {
+    width: 100%; /* Make images fill the container */
+    height: auto;
+    border-radius: 10px;
 }
 
-.carousel-item h4 {
-    font-size: 0.85rem;
-    color: #333;
+.ad-carousel-item p {
+    font-size: 1.1rem;
+    padding: 10px;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Shadow for text */
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background for text */
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    margin: 0;
+}
+.ad-link {
+    color: white;
+    background-color: green;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
-.carousel-control {
-    background: none;
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-    color: #333;
-    padding: 0 10px;
+.ad-link:hover {
+    background-color: darkgreen;
 }
 
 /* Hover effect */
