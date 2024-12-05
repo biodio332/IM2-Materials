@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Order</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="center-container">
+        <h2>Edit Order</h2>
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Customer -->
+            <div class="input-group">
+                <label for="customer">Customer:</label>
+                <select id="customer" name="customer" required>
+                    {% for customer in customers %}
+                        <option value="{{ customer.id }}" {% if customer.id == order.customer.id %}selected{% endif %}>
+                            {{ customer.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Total Amount -->
+            <div class="input-group">
+                <label for="total_amount">Total Amount:</label>
+                <input type="number" id="total_amount" name="total_amount" value="{{ order.total_amount }}" step="0.01" required>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Update Order</button>
+        </form>
+        <a href="{% url 'manage_orders' %}" class="back-link">Back to Orders</a>
+    </div>
+</body>
+</html>

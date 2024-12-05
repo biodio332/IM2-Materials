@@ -1,0 +1,99 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kwikly - Transaction</title>
+    <link rel="stylesheet" href="{% static 'transaction.css' %}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="{% url 'store' %}">Kwikly</a>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search stores">
+                <button>Search</button>
+            </div>
+            <div class="user-actions">
+                {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                        <a href="{% url 'admin_dashboard' %}" class="admin-dashboard-btn">Admin Dashboard</a>
+                        <a href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                        <div class="cart">
+                            <a href="/cart/cart/summary">Cart</a>
+                            <a href="{% url 'account' %}">Account</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <h1>Transaction Form</h1>
+        <form method="POST" class="transaction-form">
+            {% csrf_token %}
+            
+            <label for="payment_method">Payment Method:</label>
+            <select id="payment_method" name="payment_method" required>
+                <option value="">Select Payment Method</option>
+                <option value="Cash">Cash</option>
+                <option value="Card">Card</option>
+                <option value="Online">Online</option>
+            </select>
+
+            <label for="province">Province:</label>
+            <select id="province" name="province" required>
+                <option value="">Select Province</option>
+                <option value="Metro Manila">Metro Manila</option>
+                <option value="Cebu">Cebu</option>
+                <option value="Davao">Davao</option>
+            </select>
+
+            <label for="city">City:</label>
+            <select id="city" name="city" required>
+                <option value="">Select City</option>
+                <option value="Quezon City">Quezon City</option>
+                <option value="Cebu City">Cebu City</option>
+                <option value="Davao City">Davao City</option>
+            </select>
+
+            <label for="ward">Ward:</label>
+            <select id="ward" name="ward" required>
+                <option value="">Select Ward</option>
+                <option value="Ward 1">Ward 1</option>
+                <option value="Ward 2">Ward 2</option>
+                <option value="Ward 3">Ward 3</option>
+            </select>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" placeholder="Specify additional details (e.g., house color, landmarks)"></textarea>
+            <button type="submit" class="submit-btn">Submit</button>
+            
+        </form>
+        <form method="POST" action="{% url 'cart:reset_order_status' order_id %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="back-btn">Back to Cart</button>
+        </form>
+
+        <!-- Confirmation Modal -->
+        {% if confirmation_message %}
+        <div class="modal-overlay">
+            <div class="confirmation-modal">
+                <h2>Transaction Successful!</h2>
+                <p>Your transaction has been successfully recorded.</p>
+                <a href="{% url 'store' %}">Return to Store</a>
+            </div>
+        </div>
+        {% endif %}
+    </main>
+</body>
+</html>

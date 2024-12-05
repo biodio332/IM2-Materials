@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Transaction</title>
+    <link rel="stylesheet" href="{% static 'add_style.css' %}">
+</head>
+<body>
+    {% include 'header.html' %}
+    {% if messages %}
+        <div class="alert">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="center-container">
+        <h2>Add Transaction</h2>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <!-- Customer Dropdown -->
+            <div class="input-group">
+                <label for="customer">Customer:</label>
+                <select id="customer" name="customer" required>
+                    <option value="" disabled selected>Select a Customer</option>
+                    {% for customer in customers %}
+                        <option value="{{ customer.customer_id }}">{{ customer.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Order Dropdown -->
+            <div class="input-group">
+                <label for="order">Order:</label>
+                <select id="order" name="order" required>
+                    <option value="" disabled selected>Select an Order</option>
+                    {% for order in orders %}
+                        <option value="{{ order.order_id }}">
+                            Order {{ order.order_id }} - 
+                            {% if order.store %}
+                                {{ order.store.store_name }}
+                            {% else %}
+                                No Store
+                            {% endif %}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Payment Method Dropdown -->
+            <div class="input-group">
+                <label for="payment_method">Payment Method:</label>
+                <select id="payment_method" name="payment_method" required>
+                    <option value="" disabled selected>Select a Payment Method</option>
+                    {% for method in payment_methods %}
+                        <option value="{{ method }}">{{ method }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Province Input -->
+            <div class="input-group">
+                <label for="province">Province:</label>
+                <input type="text" id="province" name="province" placeholder="Enter province" required>
+            </div>
+
+            <!-- City Input -->
+            <div class="input-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" placeholder="Enter city" required>
+            </div>
+
+            <!-- Ward Input -->
+            <div class="input-group">
+                <label for="ward">Ward:</label>
+                <input type="text" id="ward" name="ward" placeholder="Enter ward" required>
+            </div>
+
+            <!-- Description (Optional) -->
+            <div class="input-group">
+                <label for="description">Description (Optional):</label>
+                <textarea id="description" name="description" rows="4" placeholder="Enter a brief description"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Add Transaction</button>
+        </form>
+
+        <!-- Back Link -->
+        <a href="{% url 'manage_transactions' %}" class="back-link">Back to Manage Transactions</a>
+    </div>
+</body>
+</html>

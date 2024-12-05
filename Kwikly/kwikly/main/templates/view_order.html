@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Order</title>
+    <link rel="stylesheet" href="{% static 'manages_style.css' %}">
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="center-container">
+        <h2>Order Details</h2>
+        <div class="table-container">
+            <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+            <p><strong>Customer:</strong> {{ order.customer.name }}</p>
+            <p><strong>Store:</strong> {{ order.store.store_name }}</p>
+            <p><strong>Total Price:</strong> ₱{{ order.total_price }}</p>
+        </div>
+
+        <h3>Order Products</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in order_products %}
+                    <tr>
+                        <td>{{ product.product.product_name }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>₱{{ product.product.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <a href="{% url 'manage_orders' %}" class="back-link">Back to Orders</a>
+    </div>
+</body>
+</html>

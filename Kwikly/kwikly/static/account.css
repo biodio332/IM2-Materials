@@ -97,3 +97,37 @@ strong {
     color: #333;
     font-weight: bold;
 }
+
+
+
+.submit-btn {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.profile-picture-section {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.profile-picture {
+    width: 150px; /* Adjust size as needed */
+    height: 150px; /* Ensure width and height are equal for a perfect circle */
+    border-radius: 50%; /* Makes the image a circle */
+    object-fit: cover; /* Ensures the image fills the circle and is cropped if necessary */
+    cursor: pointer; /* Makes the image clickable */
+    border: 2px solid #ccc; /* Optional: Add a border for better visibility */
+    transition: border-color 0.3s ease; /* Optional: Smooth transition on hover */
+}
+
+.profile-picture:hover {
+    border-color: #007BFF; /* Changes border color on hover for interactivity */
+}

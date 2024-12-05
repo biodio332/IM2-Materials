@@ -25,7 +25,6 @@
                         <a href="{% url 'logout' %}">Logout</a>
                     {% else %}
                         <div class="cart">
-                            <a href="/cart/cart/summary">Cart</a>
                             <a href="{% url 'account' %}">Account</a>
                             <a href="{% url 'logout' %}">Logout</a>
                         </div>
@@ -94,7 +93,7 @@
 
         function showSlide(index) {
             carouselItems.forEach((item, i) => {
-                item.style.transform = `translateX(-${index * 100}%)`;
+                item.style.transform = 'translateX(-${index * 100}%)';
             });
         }
 

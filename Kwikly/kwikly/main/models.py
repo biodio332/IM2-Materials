@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth.hashers import make_password
+from decimal import Decimal
 
 class CustomerManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
@@ -36,6 +37,7 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255)
     contact = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
+    profile_picture = models.ImageField(upload_to='customer_profiles/', null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -60,25 +62,6 @@ class Store(models.Model):
         return self.store_name
 
 
-class Transaction(models.Model):
-    transaction_id = models.AutoField(primary_key=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    payment_method = models.CharField(max_length=255)
-    date = models.DateField()
-
-    def __str__(self):
-        return f"Transaction {self.transaction_id}"
-
-
-class Order(models.Model):
-    order_id = models.AutoField(primary_key=True)
-    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE)
-    store = models.ForeignKey(Store, on_delete=models.CASCADE)
-    order_date = models.DateField()
-
-    def __str__(self):
-        return f"Order {self.order_id}"
-
 
 class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
@@ -100,32 +83,50 @@ class Product(models.Model):
     def __str__(self):
         return self.store.store_name if self.store else "No Store"
 
-# Transaction Model
-class Transaction(models.Model):
-    transaction_id = models.AutoField(primary_key=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='transactions')
-    payment_method = models.CharField(max_length=50, choices=[('Cash', 'Cash'), ('Card', 'Card'), ('Online', 'Online')])
-    date = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"Transaction {self.transaction_id} by {self.customer.username}"
 
 # Order Model
 class Order(models.Model):
-    order_id = models.AutoField(primary_key=True)
-    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE, related_name='orders')
-    store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='orders')
-    order_date = models.DateTimeField(auto_now_add=True)
+        order_id = models.AutoField(primary_key=True)
+        customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders', null=True)
+        store = models.ForeignKey(Store, null=True, on_delete=models.SET_NULL)
+        total_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))  # New field
 
-    def __str__(self):
-        return f"Order {self.order_id} - Store: {self.store.store_name}"
+        completed = models.BooleanField(default=False)
+
+        def __str__(self):
+            return f"Order {self.order_id}"
 
 class OrderProduct(models.Model):
-    order_product_id = models.AutoField(primary_key=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(null=False, blank=False, default=1)
 
     def __str__(self):
         return f"Order {self.order.order_id} - Product {self.product.product_name} (Quantity: {self.quantity})"
 
+# Transaction Model
+class Transaction(models.Model):
+    TRANSACTION_STATUS = [
+        ('Received', 'Received'),
+        ('On Delivery', 'On Delivery'),
+        ('Completed', 'Completed'),
+        ('Store Received', 'Store Received'),
+    ]
+    transaction_id = models.AutoField(primary_key=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='transactions')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='transactions')
+    payment_method = models.CharField(max_length=50, choices=[('Cash', 'Cash'), ('Card', 'Card'), ('Online', 'Online')])
+    province = models.CharField(max_length=100,null=True)
+    city = models.CharField(max_length=100,null=True)
+    ward = models.CharField(max_length=100,null=True)   
+    description = models.TextField(blank=True, null=True)  # Allow optional description
+    date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=50, choices=TRANSACTION_STATUS, default='Waiting for Store to Receive')
+    
+    def __str__(self):
+        return (
+            f"Transaction {self.transaction_id} by {self.customer.username} "
+            f"in {self.province}, {self.city}, {self.ward} - {self.description or 'No description'}"
+        )
+    

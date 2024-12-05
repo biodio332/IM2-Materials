@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
     <style>
+        /* Styles remain unchanged */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -22,6 +23,10 @@
         h1 {
             text-align: center;
             color: #333;
+        }
+        .order-info {
+            text-align: center;
+            margin-bottom: 20px;
         }
         table {
             width: 100%;
@@ -53,88 +58,80 @@
         .actions button:hover {
             background-color: #0056b3;
         }
-        .delete-btn {
-            background-color: #dc3545;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .delete-btn:hover {
-            background-color: #c82333;
-        }
-        .update-btn {
-            background-color: #28a745;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .update-btn:hover {
-            background-color: #218838;
-        }
-        input[type="number"] {
-            width: 50px;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Shopping Cart</h1>
-    
-        <table>
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cart_items %}
+    {% if user.is_authenticated %}
+        <div class="container">
+            <h1>Shopping Cart{% if store %} for {{ store.name }}{% endif %}</h1>
+
+            <div class="order-info">
+                {% if order_id %}
+                    <p><strong>Current Order ID:</strong> {{ order_id }}</p>
+                {% else %}
+                    <p><strong>No active order found.</strong></p>
+                {% endif %}
+            </div>
+
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ item.product.product_name }}</td>
-                        <td>${{ item.product.price }}</td>
-                        <td>
-                            <!-- Form to update quantity -->
-                            <form method="POST" action="{% url 'cart:cart_update' item.product.product_id %}" style="display:inline;">
-                                {% csrf_token %}
-                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
-                                <button type="submit" class="update-btn">Update</button>
-                            </form>
-                        </td>
-                        <td>
-                            <!-- Form to delete the product -->
-                            <form method="POST" action="{% url 'cart:cart_delete' item.product.product_id %}" style="display:inline;">
-                                {% csrf_token %}
-                                <button type="submit" class="delete-btn">Delete</button>
-                            </form>
-                        </td>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
                     </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="4">Your cart is empty.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    
-        <div class="cart-summary">
-            <h3>Cart Summary</h3>
-            <p>Total Quantity: {{ total_quantity }}</p>
-            <p>Total Price: Pesos {{ total_price }}</p>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                        <tr>
+                            <td>{{ item.product.product_name }}</td>
+                            <td>${{ item.product.price }}</td>
+                            <td>
+                                <form method="POST" action="{% url 'cart:cart_update' item.product.product_id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                                    <button type="submit">Update</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="POST" action="{% url 'cart:cart_delete' item.product.product_id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">Your cart is empty.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="cart-summary">
+                <h3>Cart Summary</h3>
+                <p>Total Quantity: {{ total_quantity }}</p>
+                <p>Total Price: Pesos {{ total_price }}</p>
+            </div>
+
+            <div class="actions">
+                <a href="{% url 'store' %}">
+                    <button>Back to Home</button>
+                </a>
+                {% if order_id %}
+                    <a href="{% url 'cart:complete_order' order_id %}">
+                        <button>Proceed to Checkout</button>
+                    </a>
+                {% else %}
+                    <button disabled>Proceed to Checkout</button>
+                {% endif %}
+            </div>
         </div>
-    
-        <div class="actions">
-            <a href="{% url 'home' %}">
-                <button>Back to Home</button>
-            </a>
-            <button>Proceed to Checkout</button>
-        </div>
-    </div>
+    {% else %}
+        <script>
+            window.location.href = "{% url 'login' %}";
+        </script>
+    {% endif %}
 </body>
 </html>

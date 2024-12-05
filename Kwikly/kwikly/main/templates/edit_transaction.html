@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Transaction</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="center-container">
+        <h2>Edit Transaction</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="" disabled>Select Status</option>
+                    {% for value, display in transaction.TRANSACTION_STATUS %}
+                        <option value="{{ value }}" {% if value == transaction.status %}selected{% endif %}>
+                            {{ display }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="submit-btn">Update Transaction</button>
+        </form>
+        <a href="{% url 'manage_transactions' %}" class="back-link">Back to Transactions</a>
+    </div>
+</body>
+</html>
