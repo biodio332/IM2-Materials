@@ -10,21 +10,10 @@
 </head>
 <body>
     {% include 'components/sidebar.html' %}
-
-
-    {% if messages %}
-                <div class="alert">
-                    {% for message in messages %}
-                        <p>{{ message }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        <h2>Manage Products</h2>
     
     <div class="page-content"> 
         <div class="center-container">
-            
-            
+            <h2 class="page-title">Manage Products</h2>
             <!-- Styled Add Product Button -->
             <a href="{% url 'add_product' %}" class="add-user-btn">Add Product</a> <!-- Apply the button styling here -->
 

@@ -8,7 +8,6 @@
     <link rel="icon" type="image/x-icon" href="/media/uploads/products/kwikly.png">
 </head>
 <body>
-    {% include 'header.html' %}
     <div class="center-container">
         <h2>Edit Product: {{ product.product_name }}</h2>
 
@@ -43,8 +42,14 @@
                 {% endfor %}
             </select>
             
-            <!-- Image Upload -->
+            <!-- Image Section -->
             <label for="image">Image</label>
+            {% if product.image %}
+                <p>Curret image:</p>
+                <img src="{{ product.image.url }}" alt="Current Image" style="max-width: 200px; max-height: 200px;"></p>
+                <input type="checkbox" id="clear_image" name="clear_image">
+                <label for="clear_image">Clear current image</label>
+            {% endif %}
             <input type="file" id="image" name="image">
             
             <!-- Submit Button -->

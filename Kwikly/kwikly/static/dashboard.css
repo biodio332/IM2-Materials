@@ -1,6 +1,6 @@
 /* Page Content Styles */
 .page-content {
-    margin-left: 20%; /* Same width as sidebar */
+    margin-left: 15%; /* Same width as sidebar */
     padding: 20px;
 }
 
@@ -82,3 +82,4 @@
 .actions-list .action-link:hover {
     background-color: #00796b;
 }
+

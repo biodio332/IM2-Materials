@@ -210,7 +210,7 @@ def edit_user(request, user_id):
         return redirect("manage_users")
 
     context = {"user": user}
-    return render(request, "edit_user.html", context)
+    return render(request, "components/edit_user.html", context)
 
 
 # Delete User
@@ -323,12 +323,15 @@ def edit_product(request, product_id):
         product.category = Category.objects.get(category_id=request.POST.get("category"))
         product.store = Store.objects.get(store_id=request.POST.get("store"))
         
+        # Check if the clear_image checkbox is selected
+        if request.POST.get("clear_image"):
+            if product.image:
+                product.image.delete()  # Deletes the file from storage
+            product.image = None  # Clears the image field in the database
+
         # Handle image upload if provided
-        if request.FILES.get("image"):
+        elif request.FILES.get("image"):  # New image upload takes priority over clear_image
             product.image = request.FILES["image"]
-        else:
-            # If no new image is uploaded, retain the existing image
-            product.image = product.image
 
         # Save the updated product
         product.save()
@@ -347,6 +350,7 @@ def edit_product(request, product_id):
     }
 
     return render(request, 'components/edit_product.html', context)
+
 
 
 @login_required
@@ -382,17 +386,21 @@ def add_store(request):
     if request.method == "POST":
         store_name = request.POST.get("store_name")
         address = request.POST.get("address")
+        image = request.FILES.get("image")  # Retrieve the uploaded file
 
-        # Create new store
-        store = Store.objects.create(
-            store_name=store_name,
-            address=address,
-        )
-
-        messages.success(request, f"Store {store.store_name} added successfully.")
-        return redirect('manage_stores')
+        if store_name and address:
+            store = Store.objects.create(
+                store_name=store_name,
+                address=address,
+                image=image,  # Save the uploaded image
+            )
+            messages.success(request, f"Store {store.store_name} added successfully.")
+            return redirect('manage_stores')
+        else:
+            messages.error(request, "Please provide all required fields.")
 
     return render(request, 'components/add_store.html')
+
 
 @login_required
 def edit_store(request, store_id):
@@ -402,8 +410,21 @@ def edit_store(request, store_id):
     store = get_object_or_404(Store, store_id=store_id)
 
     if request.method == "POST":
+        # Update store fields
         store.store_name = request.POST.get("store_name")
         store.address = request.POST.get("address")
+
+        # Check if the clear_image checkbox is selected
+        if request.POST.get("clear_image"):
+            if store.image:
+                store.image.delete()  # Delete the image file from storage
+            store.image = None  # Clear the image field in the database
+
+        # Handle image upload if provided
+        elif request.FILES.get("image"):  # New image upload takes priority over clear_image
+            store.image = request.FILES["image"]
+
+        # Save the updated store
         store.save()
 
         messages.success(request, f"Store {store.store_name} updated successfully.")
@@ -414,6 +435,7 @@ def edit_store(request, store_id):
     }
 
     return render(request, 'components/edit_store.html', context)
+
 
 @login_required
 def delete_store(request, store_id):
