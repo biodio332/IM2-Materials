@@ -12,25 +12,7 @@
     {% include 'components/navbar.html' %}
 
     <main class="main-content">
-        <!-- Ad Carousel Section -->
-        <div class="ad-carousel-wrapper">
-            <section class="ad-carousel">
-                <div class="ad-carousel-container">
-                    <div class="ad-carousel-inner">
-                        {% for ad in ads %}
-                        <div class="ad-carousel-item">
-                            {% if ad.image %}
-                                <img src="{{ ad.image.url }}" alt="Ad for {{ ad.name }}">
-                            {% else %}
-                                <img src="{% static 'images/default-ad.jpg' %}" alt="Default Ad">
-                            {% endif %}
-                            <p>{{ ad.description|default:"" }}</p>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </section>
-        </div>
+    
         
         <!-- New Image Section -->
         <section class="featured-image">

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Customer, Store, Transaction, Order, OrderProduct, Product, Category, Ad
+from .models import Customer, Store, Transaction, Order, OrderProduct, Product, Category
 
 
 admin.site.register(Store)
@@ -15,6 +15,3 @@ class CustomerAdmin(admin.ModelAdmin):
     search_fields = ('username',)
     ordering = ('username',)
     
-@admin.register(Ad)
-class AdAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'image', 'link')

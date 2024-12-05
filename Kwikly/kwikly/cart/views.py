@@ -23,6 +23,7 @@ def cart_summary(request):
         'total_price': total_price,
         'total_quantity': total_quantity,
     })
+
 def cart_add(request):
     if request.method == 'POST':
         product_id = request.POST.get('product_id')

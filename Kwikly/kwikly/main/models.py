@@ -129,12 +129,4 @@ class OrderProduct(models.Model):
     def __str__(self):
         return f"Order {self.order.order_id} - Product {self.product.product_name} (Quantity: {self.quantity})"
     
-class Ad(models.Model):
-    name = models.CharField(max_length=255, null=True)
-    description = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='ads/', null=True)
-    link = models.URLField(blank=True, null=True)  # Optional link for the ad
-
-    def __str__(self):
-        return self.name
 

@@ -7,7 +7,7 @@
         /* Footer General Styles */
         footer {
             color: white; /* White text */
-            font-family: Arial, sans-serif;
+            font-family: "Montserrat", sans-serif;
             padding-top: 20px
         }
 
@@ -169,5 +169,11 @@
             </div>
         </div>
     </footer>
+    <script>
+         function updateCartButton(cartCount) {
+            // Assuming you have an element with id 'cart-count' in the navbar to display the count
+            $('#cart-count').text(cartCount);
+        };
+    </script>
 </body>
 </html>
