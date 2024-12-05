@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
-from .models import Product, Category, Customer, Store
+from .models import Product, Category, Customer, Store, Ad
 
 def home(request):
     search_query = request.GET.get('search', '').strip()  # Use empty string as default
@@ -452,8 +452,9 @@ def delete_store(request, store_id):
 
 def store_view(request):
     categories = Category.objects.all()  # Fetch categories from the database
-    stores = Store.objects.all()          # Fetch stores from the database
-    return render(request, 'store.html', {'categories': categories, 'stores': stores})
+    stores = Store.objects.all()    
+    ads = Ad.objects.all()# Fetch stores from the database
+    return render(request, 'store.html', {'categories': categories, 'stores': stores, 'ads': ads})
 
 def store_detail(request, store_id):
     store = get_object_or_404(Store, pk=store_id)
