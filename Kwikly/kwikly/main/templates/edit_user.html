@@ -5,37 +5,166 @@
     <meta charset="UTF-8">
     <title>Edit User</title>
     <link rel="icon" type="image/x-icon" href="/media/uploads/products/kwikly.png">
-    <link rel="stylesheet" href="{% static 'edit_style.css' %}">
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 2rem;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        /* Center Container */
+        .center-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .center-container h2 {
+            margin-bottom: 20px;
+        }
+
+        /* Form Styles */
+        form {
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-size: 1rem;
+            margin-bottom: 5px;
+            margin-top: 10px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        /* Textarea Styles */
+        textarea {
+            resize: vertical;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            width: 250px;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 1.1rem;
+        }
+
+        .sidebar a:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    {% include 'header.html' %}
-    <div class="center-container">
-        <h2>Edit User: {{ user.username }}</h2>
+
+{% include 'components/sidebar.html' %}
+
+<div class="center-container">
+    <h2>Edit User: {{ user.username }}</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
         
-        <form method="POST">
-            {% csrf_token %}
-            
-            <!-- Name Input -->
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" value="{{ user.name }}" required>
-            
-            <!-- Email Input -->
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="{{ user.email }}" required>
-            
-            <!-- Contact Input -->
-            <label for="contact">Contact:</label>
-            <input type="text" id="contact" name="contact" value="{{ user.contact }}" required>
-            
-            <!-- Address Input -->
-            <label for="address">Address:</label>
-            <textarea id="address" name="address" rows="4" required>{{ user.address }}</textarea>
-            
-            <!-- Submit Button -->
-            <button type="submit" class="submit-btn">Save Changes</button>
-        </form>
+        <!-- Name Input -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ user.name }}" required>
         
-        <a href="{% url 'manage_users' %}" class="back-link">Back to User Management</a>
-    </div>
+        <!-- Email Input -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ user.email }}" required>
+        
+        <!-- Contact Input -->
+        <label for="contact">Contact:</label>
+        <input type="text" id="contact" name="contact" value="{{ user.contact }}" required>
+        
+        <!-- Address Input -->
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" rows="4" required>{{ user.address }}</textarea>
+        
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">Save Changes</button>
+    </form>
+    
+    <a href="{% url 'manage_users' %}" class="back-link">Back to User Management</a>
+</div>
+
 </body>
 </html>

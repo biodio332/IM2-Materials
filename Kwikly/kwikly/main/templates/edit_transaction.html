@@ -4,14 +4,133 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Transaction</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <!-- Internal CSS -->
+    <style>
+        /* Montserrat Font */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+        /* Global Styles */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 2rem;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        /* Center Container */
+        .center-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .center-container h2 {
+            margin-bottom: 20px;
+        }
+
+        /* Form Styles */
+        form {
+            width: 100%;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-block;
+            background-color: green;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .back-link:hover {
+            background-color: #555;
+        }
+
+        /* Alert Styles */
+        .alert {
+            background-color: #f44336;
+            color: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .alert p {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-    {% include 'header.html' %}
+    {% include 'components/sidebar.html' %}
+
     <div class="center-container">
         <h2>Edit Transaction</h2>
         <form method="POST">
             {% csrf_token %}
+            
+            <!-- Status Dropdown -->
             <div class="input-group">
                 <label for="status">Status:</label>
                 <select id="status" name="status" required>
@@ -23,8 +142,12 @@
                     {% endfor %}
                 </select>
             </div>
+
+            <!-- Submit Button -->
             <button type="submit" class="submit-btn">Update Transaction</button>
         </form>
+
+        <!-- Back Link -->
         <a href="{% url 'manage_transactions' %}" class="back-link">Back to Transactions</a>
     </div>
 </body>

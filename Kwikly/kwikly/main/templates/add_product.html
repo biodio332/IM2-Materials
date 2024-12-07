@@ -1,11 +1,118 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'add_style.css' %}">
 <link rel="icon" type="image/x-icon" href="/media/uploads/products/kwikly.png">
-<header>
-    <!-- Header content here -->
-</header>
+
+<style>
+    /* Montserrat Font */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+    /* Global Styles */
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        color: #333;
+        font-size: 2rem;
+        text-align: center;
+        margin-top: 20px;
+        font-weight: 600;
+    }
+
+    /* Center Container */
+    .center-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+    }
+
+    .center-container h2 {
+        margin-bottom: 20px;
+    }
+
+    /* Form Styles */
+    form {
+        width: 100%;
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    .input-group label {
+        display: block;
+        color: #333;
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+
+    .input-group input, .input-group select {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+    }
+
+    .input-group input:focus, .input-group select:focus {
+        border-color: #4CAF50;
+        outline: none;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        width: 100%;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+        background-color: #45a049;
+    }
+
+    /* Back Link */
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #4CAF50;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    /* Sidebar and Header */
+    header {
+        background-color: #4CAF50;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+</style>
 
 <div class="center-container">
+    {% include 'components/sidebar.html' %}
     <h2>Add New Product</h2>
 
     <form method="POST" enctype="multipart/form-data">
