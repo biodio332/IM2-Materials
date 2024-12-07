@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Footer General Styles */
+        footer {
+            color: white; /* White text */
+            font-family: "Montserrat", sans-serif;
+            padding-top: 20px
+        }
+
+        .footer-container {
+            background-color: #00b14f; /* Light green */
+            padding: 50px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 0; /* No gap before footer-bottom */
+            color: white;
+            
+        }
+
+        .footer-column {
+            flex: 1; /* Makes columns flexible */
+            min-width: 150px; /* Ensures each column has a minimum width */
+            margin: 10px;
+             
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #fff; /* White heading color */
+        }
+
+        .footer-column ul {
+            list-style: none; /* Remove bullet points */
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .footer-column ul li a {
+            text-decoration: none;
+            color: #333; /* Dark gray link color */
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: #007bff; /* Blue color on hover */
+        }
+
+        /* Footer Bottom */
+        .footer-bottom {
+            background-color: #363a45; /* Dark gray background */
+            padding: 50px;
+            border-top: 1px solid #555; /* Medium gray border */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Ensure responsiveness */
+            font-size: 14px;
+            color: #fff; /* White text */
+            
+        }
+
+        .footer-bottom .countries {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .footer-bottom .countries li {
+            margin: 0;
+            font-size: 14px;
+            color: #ccc; /* Light gray text */
+        }
+
+        .footer-bottom .countries li:not(:last-child)::after {
+            content: "|"; /* Separator */
+            margin-left: 5px;
+            margin-right: 5px;
+            color: #555; /* Medium gray separator */
+        }
+
+        .footer-bottom .terms {
+            text-align: center;
+            flex: 1;
+            color: #ccc; /* Light gray text for terms */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-bottom .countries {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Frequently Searched</h3>
+                <ul>
+                    <li><a href="#">Kwikly SuperMarket</a></li>
+                    <li><a href="#">Essentials</a></li>
+                    <li><a href="#">Ice</a></li>
+                    <li><a href="#">Ice Cream</a></li>
+                    <li><a href="#">Korean</a></li>
+                    <li><a href="#">Fresh Goods</a></li>
+                    <li><a href="#">Water</a></li>
+                    <li><a href="#">Pharmacy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Popular Items</h3>
+                <ul>
+                    <li><a href="#">Up to 50% OFF EACH</a></li>
+                    <li><a href="#">Stores Near You</a></li>
+                    <li><a href="#">50% OFF Fri-Sun</a></li>
+                    <li><a href="#">Enjoy ZERO fees</a></li>
+                    <li><a href="#">Fresh & Frozen</a></li>
+                    <li><a href="#">Convenience Stores</a></li>
+                    <li><a href="#">Pharmacies</a></li>
+                    <li><a href="#">Age-Restricted</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>About Kwikly</h3>
+                <ul>
+                    <li><a href="#">About Kwikly</a></li>
+                    <li><a href="#">About KwiklyMart</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Become a Kwikly Merchant</a></li>
+                    <li><a href="#">Partner With Kwikly</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <ul class="countries">
+                <li>Singapore</li>
+                <li>Thailand</li>
+                <li>Philippines</li>
+                <li>Malaysia</li>
+                <li>Indonesia</li>
+                <li>Vietnam</li>
+                <li>Cambodia</li>
+                <li>Myanmar</li>
+            </ul>
+            <div class="terms">
+                <p>&copy; Kwikly 2024 • <a href="#" style="color: #ccc;">Terms</a> • <a href="#" style="color: #ccc;">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+    <script>
+         function updateCartButton(cartCount) {
+            // Assuming you have an element with id 'cart-count' in the navbar to display the count
+            $('#cart-count').text(cartCount);
+        };
+    </script>
+</body>
+</html>

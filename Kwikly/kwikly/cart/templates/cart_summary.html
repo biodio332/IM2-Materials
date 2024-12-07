@@ -1,137 +1,92 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'cart.css' %}">
     <title>Shopping Cart</title>
-    <style>
-        /* Styles remain unchanged */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            border-radius: 8px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .order-info {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        table th, table td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-        table th {
-            background-color: #f4f4f4;
-            color: #555;
-        }
-        .actions {
-            margin-top: 20px;
-            text-align: right;
-        }
-        .actions button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .actions button:hover {
-            background-color: #0056b3;
-        }
-    </style>
 </head>
+
+{% include 'components/navbar.html' %}
+
 <body>
-    {% if user.is_authenticated %}
-        <div class="container">
-            <h1>Shopping Cart{% if store %} for {{ store.name }}{% endif %}</h1>
+    <div class="wrap cf">
+        <h1 class="projTitle">Shopping Cart</h1>
+        <div class="heading cf">
+            <h1>My Cart</h1>
+            <a href="{% url 'store' %}" class="continue">Continue Shopping</a>
 
-            <div class="order-info">
-                {% if order_id %}
-                    <p><strong>Current Order ID:</strong> {{ order_id }}</p>
-                {% else %}
-                    <p><strong>No active order found.</strong></p>
-                {% endif %}
-            </div>
+        </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in cart_items %}
-                        <tr>
-                            <td>{{ item.product.product_name }}</td>
-                            <td>${{ item.product.price }}</td>
-                            <td>
+        <!-- Order Summary and Cart Items -->
+        <div class="carts">
+            <ul class="cartWrap">
+                {% for item in cart_items %}
+                <li class="items {% cycle 'odd' 'even' %}">
+                    <div class="infoWrap"> 
+                        <div class="cartSection">
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.product_name }}" class="itemImg" />
+                            <p class="itemNumber">#{{ item.product.product_id }}</p>
+                            <h3>{{ item.product.product_name }}</h3>
+                            <p>
+                                <!-- Update quantity form -->
                                 <form method="POST" action="{% url 'cart:cart_update' item.product.product_id %}" style="display:inline;">
                                     {% csrf_token %}
-                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
-                                    <button type="submit">Update</button>
+                                    <input type="number" name="quantity" class="qty" value="{{ item.quantity }}" min="1" /> x ₱{{ item.product.price }}
+                                    <button type="submit" class="update-btn">Update</button>
                                 </form>
-                            </td>
-                            <td>
-                                <form method="POST" action="{% url 'cart:cart_delete' item.product.product_id %}" style="display:inline;">
-                                    {% csrf_token %}
-                                    <button type="submit">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    {% empty %}
-                        <tr>
-                            <td colspan="4">Your cart is empty.</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-
-            <div class="cart-summary">
-                <h3>Cart Summary</h3>
-                <p>Total Quantity: {{ total_quantity }}</p>
-                <p>Total Price: Pesos {{ total_price }}</p>
-            </div>
-
-            <div class="actions">
-                <a href="{% url 'store' %}">
-                    <button>Back to Home</button>
-                </a>
-                {% if order_id %}
-                    <a href="{% url 'cart:complete_order' order_id %}">
-                        <button>Proceed to Checkout</button>
-                    </a>
-                {% else %}
-                    <button disabled>Proceed to Checkout</button>
-                {% endif %}
-            </div>
+                            </p>
+                            <p class="stockStatus">
+                                {% if item.product.in_stock %}
+                                    In Stock
+                                {% else %}
+                                    <span class="out"></span>
+                                {% endif %}
+                            </p>
+                        </div>  
+                        <div class="prodTotal cartSection">
+                          
+                        </div>
+                        <div class="cartSection removeWrap">
+                            <!-- Remove item form -->
+                            <form method="POST" class="remove-item" action="{% url 'cart:cart_delete' item.product.product_id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="remove">x</button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+                {% empty %}
+                <li class="items odd">
+                    <p>Your cart is empty.</p>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
-    {% else %}
-        <script>
-            window.location.href = "{% url 'login' %}";
-        </script>
-    {% endif %}
+
+        <!-- Promo Code Section -->
+      
+
+        <!-- Cart Summary -->
+        <div class="subtotal cf">
+            <ul>
+                <li class="totalRow"><span class="label">Subtotal</span><span class="value">₱{{ total_price }}</span></li>
+                <li class="totalRow final"><span class="label">Total</span><span class="value">₱{{ total_price }}</span></li>
+                <li class="totalRow">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'cart:complete_order' order_id %}" class="btn checkout-btn">Proceed to Checkout</a>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="btn checkout-btn">Login to Checkout</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        {% include "components/footer.html" %}
+    </footer>
 </body>
 </html>

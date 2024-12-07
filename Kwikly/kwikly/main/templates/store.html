@@ -9,65 +9,17 @@
     <link rel="stylesheet" href="{% static 'stores.css' %}">
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <a href="{% url 'store' %}">Kwikly</a>
-            </div>
-            <div class="search-bar">
-                <input type="text" placeholder="Search stores">
-                <button>Search</button>
-            </div>
-            <div class="user-actions">  
-                {% if user.is_authenticated %}
-                    {% if user.is_superuser %}
-                        <a href="{% url 'admin_dashboard' %}" class="admin-dashboard-btn">Admin Dashboard</a>
-                        <a href="{% url 'logout' %}">Logout</a>
-                    {% else %}
-                        <div class="cart">
-                            <a href="{% url 'account' %}">Account</a>
-                            <a href="{% url 'logout' %}">Logout</a>
-                        </div>
-                    {% endif %}
-                {% else %}
-                    <a href="{% url 'login' %}">Login</a>
-                {% endif %}
-            </div>
-        </div>
-    </header>
+    {% include 'components/navbar.html' %}
 
     <main class="main-content">
-        <!-- Carousel Container -->
-        <div class="carousel-wrapper">
-            <!-- Carousel Section -->
-            <section class="carousel">
-                <div class="carousel-container">
-                    <button class="carousel-control prev">❮</button>
-                    <div class="carousel-inner">
-                        {% for category in categories %}
-                        <div class="carousel-item">
-                            {% if category.image %}
-                                <img src="{{ category.image.url }}" alt="{{ category.name }}">
-                            {% else %}
-                                <img src="{% static '' %}" > <!-- Provide a default image -->
-                            {% endif %}
-                            <h4>{{ category.type }}</h4>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <button class="carousel-control next">❯</button>
-                </div>
-            </section>
-        </div>
-        
-        <!-- New Image Section -->
+        <!-- Featured Image Section -->
         <section class="featured-image">
-        <img src="{% static 'images/desktop-doorstep-store.png' %}" alt="Featured Image" class="desktop-doorstep-image">
+            <img src="{% static 'images/desktop-doorstep-store.png' %}" alt="Featured Image" class="desktop-doorstep-image">
         </section>
 
         <!-- Stores Section -->
         <section class="stores">
-            <h2>Stores</h2>
+            <h1>Stores Around You</h1>
             <div class="store-grid">
                 {% for store in stores %}
                 <div class="store-card">
@@ -75,7 +27,7 @@
                         {% if store.image %}
                             <img src="{{ store.image.url }}" alt="{{ store.store_name }}">
                         {% else %}
-                            <img src="{% static '' %}" alt="Default Store Image"> <!-- Provide a default image -->
+                            <img src="{% static 'images/default-store.jpg' %}" alt="Default Store Image">
                         {% endif %}
                         <h3>{{ store.store_name }}</h3>
                         <p>{{ store.description|default:"" }}</p>
@@ -86,26 +38,9 @@
         </section>
     </main>
 
-    <script>
-        // JavaScript for Carousel functionality
-        const carouselItems = document.querySelectorAll('.carousel-item');
-        let currentSlide = 0;
+    <footer>
+        {% include "components/footer.html" %}
+    </footer>
 
-        function showSlide(index) {
-            carouselItems.forEach((item, i) => {
-                item.style.transform = 'translateX(-${index * 100}%)';
-            });
-        }
-
-        document.querySelector('.prev').addEventListener('click', () => {
-            currentSlide = (currentSlide > 0) ? currentSlide - 1 : carouselItems.length - 1;
-            showSlide(currentSlide);
-        });
-
-        document.querySelector('.next').addEventListener('click', () => {
-            currentSlide = (currentSlide < carouselItems.length - 1) ? currentSlide + 1 : 0;
-            showSlide(currentSlide);
-        });
-    </script>
 </body>
 </html>

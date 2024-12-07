@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Store</title>
+    <link rel="icon" type="image/x-icon" href="/media/uploads/products/kwikly.png">
+    <link rel="stylesheet" href="{% static 'edit_style.css' %}">
+</head>
+<body>
+<div class="center-container">
+    <h2>Edit Store</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Store Name Input -->
+        <label for="store_name">Store Name</label>
+        <input type="text" id="store_name" name="store_name" value="{{ store.store_name }}" required>
+
+        <!-- Address Input -->
+        <label for="address">Address</label>
+        <input type="text" id="address" name="address" value="{{ store.address }}" required>
+
+        <!-- Image Section -->
+        <label for="image">Store Image</label>
+        {% if store.image %}
+            <p>Current image:</p>
+            <img src="{{ store.image.url }}" alt="Current Image" style="max-width: 200px; max-height: 200px;">
+            <input type="checkbox" id="clear_image" name="clear_image">
+            <label for="clear_image">Clear current image</label>
+        {% endif %}
+        <input type="file" id="image" name="image">
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">Save Changes</button>
+    </form>
+
+    <!-- Back to Stores Link -->
+    <a href="{% url 'manage_stores' %}" class="back-link">Back to Stores</a>
+</div>
+</body>
+</html>

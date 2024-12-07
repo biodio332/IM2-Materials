@@ -1,0 +1,287 @@
+/* transaction.css */
+
+/* Import Montserrat Font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
+/* Global Styles */
+body {
+  font-family: 'Montserrat', sans-serif; /* Changed to Montserrat */
+  font-size: 17px;
+  padding: 0;
+  margin: 0;
+  background-color: #f9f9f9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: #2196F3;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Header Styles */
+header {
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px; /* Increased from 1200px */
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo a {
+  font-size: 28px; /* Slightly larger logo */
+  font-weight: bold;
+  color: white;
+}
+
+.search-bar {
+  display: flex;
+}
+
+.search-bar input[type="text"] {
+  padding: 10px; /* Increased padding for better usability */
+  border: none;
+  border-radius: 3px 0 0 3px;
+  width: 250px; /* Increased width */
+}
+
+.search-bar button {
+  padding: 10px 15px; /* Increased padding */
+  border: none;
+  background-color: #04AA6D;
+  color: white;
+  border-radius: 0 3px 3px 0;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #45a049;
+}
+
+.user-actions a,
+.user-actions .cart a {
+  margin-left: 20px; /* Increased spacing */
+  color: white;
+}
+
+.admin-dashboard-btn {
+  background-color: #555;
+  padding: 7px 15px; /* Increased padding */
+  border-radius: 3px;
+}
+
+.admin-dashboard-btn:hover {
+  background-color: #777;
+}
+
+/* Main Content Styles */
+.main-content {
+  max-width: 1400px; /* Increased from 1200px */
+  margin: 40px auto; /* Increased top margin */
+  padding: 0 40px; /* Increased padding */
+}
+
+.main-content h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 32px; /* Larger heading */
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.transaction-form {
+  background-color: #ffffff;
+  padding: 30px 40px; /* Increased padding */
+  border: 1px solid #ddd;
+  border-radius: 8px; /* More rounded corners */
+  width: 100%;
+  max-width: 900px; /* Set a higher max-width */
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Added subtle shadow */
+}
+
+/* Form Elements */
+label {
+  margin-bottom: 5px;
+  display: block;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+  width: 100%;
+  padding: 12px; /* Increased padding */
+  margin-bottom: 25px; /* Increased margin */
+  border: 1px solid #ccc;
+  border-radius: 4px; /* Slightly more rounded */
+}
+
+textarea {
+  resize: vertical;
+}
+
+.icon-container {
+  margin-bottom: 25px;
+  padding: 7px 0;
+  font-size: 28px; /* Larger icons */
+}
+
+.icon-container i {
+  margin-right: 15px; /* Increased spacing between icons */
+}
+
+/* Button Styles */
+.btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 15px; /* Increased padding */
+  border: none;
+  width: 100%;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px; /* Larger text */
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+.back-btn {
+  background-color: #f44336; /* Red */
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #da190b;
+}
+
+/* Layout Styles */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -20px; /* Increased negative margin for better spacing */
+}
+
+.col-25 {
+  flex: 25%;
+  padding: 0 20px; /* Increased padding */
+}
+
+.col-50 {
+  flex: 50%;
+  padding: 0 20px;
+}
+
+.col-75 {
+  flex: 75%;
+  padding: 0 20px;
+}
+
+.container {
+  background-color: #f2f2f2;
+  padding: 25px 30px; /* Increased padding */
+  border: 1px solid lightgrey;
+  border-radius: 5px; /* More rounded */
+}
+
+.container h3 {
+  margin-bottom: 25px; /* Increased margin */
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .header-container,
+  .main-content {
+    padding: 0 20px;
+  }
+
+  .search-bar input[type="text"] {
+    width: 200px;
+  }
+
+  .transaction-form {
+    padding: 25px 30px;
+    max-width: 800px; /* Adjusted for medium screens */
+  }
+}
+
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25,
+  .col-50,
+  .col-75 {
+    flex: 100%;
+    padding: 0 0;
+  }
+
+  .search-bar input[type="text"] {
+    width: 100px;
+  }
+
+  .transaction-form {
+    padding: 20px;
+    max-width: 100%;
+  }
+}
+
+/* Confirmation Modal Styles */
+.confirmation-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  z-index: 1001;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+
+/* Additional Styles for Centering */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
