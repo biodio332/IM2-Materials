@@ -47,10 +47,17 @@
                         <p><strong>Address:</strong> {{ user.address }}</p>
                         <p><strong>Email:</strong> {{ user.email }}</p>
                     </div>     
+                    
+                    <!-- View Transactions Button -->
+                    <form method="get" action="{% url 'view_transactions' %}" class="view-transactions-form">
+                        <button type="submit" class="view-transactions-btn">View Transactions</button>
+                    </form>
+
                     <form method="post" action="{% url 'change_password' %}" class="change-password-form">
                         {% csrf_token %}
                         <button type="submit" class="submit-btn">Change Password</button>
                     </form>
+                    
                     {% if user.customer_id %}
                         <form method="get" action="{% url 'edit_user' user.customer_id %}" class="edit-account-form">
                             <button type="submit" class="submit-btn">Edit Account</button>

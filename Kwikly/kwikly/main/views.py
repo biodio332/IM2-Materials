@@ -380,11 +380,15 @@ def add_store(request):
     if request.method == "POST":
         store_name = request.POST.get("store_name")
         address = request.POST.get("address")
+        description = request.POST.get("description")
+        image = request.FILES.get("image")  # Handle the uploaded image file
 
         # Create new store
         store = Store.objects.create(
             store_name=store_name,
             address=address,
+            description=description,
+            image=image  # Save the uploaded image
         )
 
         messages.success(request, f"Store {store.store_name} added successfully.")
@@ -788,3 +792,36 @@ def update_profile_picture(request):
         return redirect('account')
 
     return render(request, 'account.html')
+
+@login_required
+def view_transactions(request):
+    """View to display current and past transactions for the logged-in user."""
+    customer = request.user
+    transactions = Transaction.objects.filter(customer=customer).order_by('-date')
+    context = {'transactions': transactions}
+    return render(request, 'transactions.html', context)
+
+@login_required
+def reorder_transaction(request, transaction_id):
+    """Allows the user to reorder a transaction if it is marked as 'Delivered' or 'Completed'."""
+    transaction = Transaction.objects.get(transaction_id=transaction_id, customer=request.user)
+    if transaction.status in ['Completed', 'Delivered']:
+        # Create a new order for the user, duplicating the products from the original order
+        new_order = Order.objects.create(
+            customer=request.user,
+            store=transaction.order.store,
+            total_price=transaction.order.total_price
+        )
+        
+        # Copy products from the original order to the new order
+        order_products = OrderProduct.objects.filter(order=transaction.order)
+        for item in order_products:
+            OrderProduct.objects.create(
+                order=new_order,
+                product=item.product,
+                quantity=item.quantity
+            )
+
+        return redirect('view_transactions')
+    else:
+        return redirect('view_transactions')

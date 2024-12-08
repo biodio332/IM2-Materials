@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Transactions</title>
+    <link rel="stylesheet" href="{% static 'account.css' %}">
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="center-container">
+        <h2>Your Transactions</h2>
+
+        {% if transactions %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Order Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.transaction_id }}</td>
+                            <td>{{ transaction.date }}</td>
+                            <td>{{ transaction.status }}</td>
+                            <td>${{ transaction.order.total_price }}</td>
+                            <td>
+                                {% if transaction.status == "Completed" or transaction.status == "Delivered" %}
+                                    <form method="post" action="{% url 'reorder_transaction' transaction.transaction_id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="submit-btn">Reorder</button>
+                                    </form>
+                                {% else %}
+                                    <p>Not available</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No transactions to show.</p>
+        {% endif %}
+
+        <!-- Back button -->
+        <a href="{% url 'account' %}" class="back-link">Back to Account</a>
+    </div>
+</body>
+</html>

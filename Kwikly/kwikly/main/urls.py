@@ -59,4 +59,6 @@ urlpatterns = [
     path('edit-category/<int:category_id>/', views.edit_category, name='edit_category'),
     path('delete-category/<int:category_id>/', views.delete_category, name='delete_category'),
     path('update-profile-picture/', views.update_profile_picture, name='update_profile_picture'),
+    path('account/transactions/', views.view_transactions, name='view_transactions'),
+    path('account/transactions/reorder/<int:transaction_id>/', views.reorder_transaction, name='reorder_transaction'),
 ]
