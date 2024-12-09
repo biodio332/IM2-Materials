@@ -16,17 +16,20 @@ def home(request):
     
     products = Product.objects.all()
     
+    # Filter products by category
     if selected_category:
         products = products.filter(category__type=selected_category)
 
+    # Search functionality
     if search_query:
         products = products.filter(product_name__icontains=search_query)
     
+    # Sort functionality
     if sort_option == 'low_to_high':
         products = products.order_by('price')
     elif sort_option == 'high_to_low':
         products = products.order_by('-price')
-    
+
     categories = Category.objects.all()
 
     context = {
@@ -34,7 +37,7 @@ def home(request):
         'categories': categories,
         'sort_option': sort_option,
         'selected_category': selected_category,
-        'search_query': search_query, 
+        'search_query': search_query,
     }
     return render(request, 'home.html', context)
 
@@ -73,19 +76,24 @@ def user_register(request):
         address = request.POST.get("address")
         
         if password == confirm_password:
-            if not Customer.objects.filter(username=username).exists():
-                customer = Customer.objects.create_user(
-                    username=username,
-                    email=email,
-                    password=password,
-                    name=name,
-                    contact=contact,
-                    address=address
-                )
-                messages.success(request, "Registration successful. You can now log in.")
-                return redirect("login")
-            else:
+            if Customer.objects.filter(username=username).exists():
                 messages.error(request, "Username already exists.")
+            elif Customer.objects.filter(email=email).exists():
+                messages.error(request, "Email is already registered.")
+            else:
+                try:
+                    customer = Customer.objects.create_user(
+                        username=username,
+                        email=email,
+                        password=password,
+                        name=name,
+                        contact=contact,
+                        address=address
+                    )
+                    messages.success(request, "Registration successful. You can now log in.")
+                    return redirect("login")
+                except IntegrityError:
+                    messages.error(request, "An error occurred during registration. Please try again.")
         else:
             messages.error(request, "Passwords do not match.")
     return render(request, "register.html")
@@ -189,6 +197,7 @@ def add_user(request):
 @login_required
 def edit_user(request, user_id):
     user = get_object_or_404(Customer, customer_id=user_id)
+    
     if request.user.is_superuser:
         user = Customer.objects.get(customer_id=user_id)
     elif request.user.customer_id == user_id:
@@ -197,6 +206,7 @@ def edit_user(request, user_id):
     else:
         # Otherwise, prevent access
         return redirect('account_information')
+
     # Handle form submission
     if request.method == "POST":
         user.name = request.POST.get("name")
@@ -205,7 +215,12 @@ def edit_user(request, user_id):
         user.address = request.POST.get("address")
         user.save()
         messages.success(request, f"User {user.username} updated successfully.")
-        return redirect("manage_users")
+        
+        # Redirect logic
+        if request.user.is_superuser:
+            return redirect("manage_users")  # Superuser redirects to manage_users
+        else:
+            return redirect("account")  # Non-superuser redirects to account
 
     context = {"user": user}
     return render(request, "edit_user.html", context)
@@ -435,17 +450,50 @@ def store_view(request):
     stores = Store.objects.all()          # Fetch stores from the database
     return render(request, 'store.html', {'categories': categories, 'stores': stores})
 
+
 def store_detail(request, store_id):
     store = get_object_or_404(Store, pk=store_id)
     products = Product.objects.filter(store=store)
-    categories = Category.objects.all()  # Fetch categories here
+
+    # Get search query, sort option, and selected category from GET parameters
+    search_query = request.GET.get('search', None)
+    sort_option = request.GET.get('sort', None)
+    selected_category = request.GET.get('category', None)
+    
+    # Filter products by category
+    if selected_category:
+        products = products.filter(category__type=selected_category)
+
+    # Search functionality
+    if search_query:
+        print(f"Search query: {search_query}")  # Debugging line
+        products = products.filter(product_name__icontains=search_query)
+    
+    # Sort functionality
+    if sort_option == 'low_to_high':
+        products = products.order_by('price')
+    elif sort_option == 'high_to_low':
+        products = products.order_by('-price')
+
+    # Fetch all categories
+    categories = Category.objects.all()
+
+    # Debugging line to ensure `products` are filtered correctly
+    print(f"Filtered products: {products}")
 
     context = {
         'store': store,
         'products': products,
         'categories': categories,  # Pass categories to the template
+        'sort_option': sort_option,
+        'selected_category': selected_category,
+        'search_query': search_query,
     }
     return render(request, 'home.html', context)
+
+
+
+
 
 def cart_summary(request):
     # Your code to render the cart summary
@@ -810,7 +858,8 @@ def reorder_transaction(request, transaction_id):
         new_order = Order.objects.create(
             customer=request.user,
             store=transaction.order.store,
-            total_price=transaction.order.total_price
+            total_price=transaction.order.total_price,
+            completed=False  # Mark the new order as incomplete (cart status)
         )
         
         # Copy products from the original order to the new order
@@ -822,6 +871,19 @@ def reorder_transaction(request, transaction_id):
                 quantity=item.quantity
             )
 
-        return redirect('view_transactions')
+        # Redirect to the cart summary page for the store
+        return redirect('store')
     else:
         return redirect('view_transactions')
+
+    
+def store_view(request):
+    search_query = request.GET.get('search', '')
+    if search_query:
+        stores = Store.objects.filter(store_name__icontains=search_query)
+    else:
+        stores = Store.objects.all()
+    return render(request, 'store.html', {'stores': stores})
+
+
+

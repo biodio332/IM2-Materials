@@ -135,7 +135,10 @@
 </head>
 <body>
 
-{% include 'components/sidebar.html' %}
+<!-- Check if the current logged-in user is a superuser -->
+{% if request.user.is_superuser %}
+    {% include 'components/sidebar.html' %}
+{% endif %}
 
 <div class="center-container">
     <h2>Edit User: {{ user.username }}</h2>
@@ -163,7 +166,11 @@
         <button type="submit" class="submit-btn">Save Changes</button>
     </form>
     
-    <a href="{% url 'manage_users' %}" class="back-link">Back to User Management</a>
+    {% if request.user.is_superuser %}
+        <a href="{% url 'manage_users' %}" class="back-link">Back to User Management</a>
+    {% else %}
+        <a href="{% url 'account' %}" class="back-link">Back to Account</a>
+    {% endif %}
 </div>
 
 </body>

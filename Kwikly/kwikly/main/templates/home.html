@@ -98,39 +98,10 @@
         </style>
     </head>
     <body>
-        <header>
-            <div class="header-container">
-                <div class="logo">
-                    <a href="{% url 'store' %}">Kwikly</a>
-                </div>
-                <div class="search-bar">
-                    <input type="text" placeholder="Search for products, store, and more">
-                    <button>Search</button>
-                </div>
-                <div class="user-actions">  
-                    {% if user.is_authenticated %}
-                        {% if user.is_superuser %}
-                        <div class="dashboard">
-                            <a href="{% url 'admin_dashboard' %}"><button>Admin Dashboard</button></a>
-                            <a href="{% url 'logout' %}"><button>Logout</button></a>
-                        </div>
-                        {% else %}
-                        <div class="cart">
-                            <a href="{% url 'cart:cart_summary' store_id=store.store_id %}"><button>Cart </button></a>
-                            <a href="{% url 'account' %}"><button>Account</button></a>
-                            <a href="{% url 'logout' %}"><button>Logout</button></a>
-                        </div>
-                        {% endif %}
-                    {% else %}
-                        <div class="login">
-                            <a href="{% url 'login' %}"><button>Login</button></a>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        </header>
+        {% include 'components/navbar.html' %}
+    <!-- source ~/DjangoProjects/myenv/bin/activate c -->
     </body>
-    </html>
+    
 
     <!-- Store Section -->
     <div class="store-details">

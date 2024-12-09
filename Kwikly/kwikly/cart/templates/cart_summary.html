@@ -76,9 +76,13 @@
                 <li class="totalRow final"><span class="label">Total</span><span class="value">₱{{ total_price }}</span></li>
                 <li class="totalRow">
                     {% if user.is_authenticated %}
-                    <a href="{% url 'cart:complete_order' order_id %}" class="btn checkout-btn">Proceed to Checkout</a>
+                        {% if cart_items %}
+                            <a href="{% url 'cart:complete_order' order_id %}" class="btn checkout-btn">Proceed to Checkout</a>
+                        {% else %}
+                            <a href="#" class="btn checkout-btn disabled" onclick="return false;">Your cart is empty</a>
+                        {% endif %}
                     {% else %}
-                    <a href="{% url 'login' %}" class="btn checkout-btn">Login to Checkout</a>
+                        <a href="{% url 'login' %}" class="btn checkout-btn">Login to Checkout</a>
                     {% endif %}
                 </li>
             </ul>

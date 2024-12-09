@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +12,8 @@
 </head>
 <body>
     <!-- Header Section -->
-  
     {% include 'components/navbar.html' %}
+
     <!-- Main Content Section -->
     <main class="main-content">
         <h1>Transaction Form</h1>
@@ -22,64 +21,61 @@
             <form method="POST" class="transaction-form">
                 {% csrf_token %}
                 <!-- Payment Method Selection -->
-              
-
-                <!-- Billing and Payment Sections -->
                 <div class="row">
                     <div class="col-75">
                         <div class="container">
                             <div class="row">
                                 <!-- Billing Address Section -->
-                            
-
-                                <!-- Payment Section -->
                                 <div class="col-50">
                                     <h3>Billing Address</h3>
-                                    <label>Accepted Cards</label>
-                                    <div class="icon-container">
-                                        <i class="fa fa-cc-visa" style="color:navy;"></i>
-                                        <i class="fa fa-cc-amex" style="color:blue;"></i>
-                                        <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                                        <i class="fa fa-cc-discover" style="color:orange;"></i>
-                                    </div>
 
+                                    <!-- Payment Method -->
                                     <label for="payment_method">Payment Method:</label>
-                <select id="payment_method" name="payment_method" required>
-                    <option value="">Select Payment Method</option>
-                    <option value="Cash">Cash</option>
-                    <option value="Card">Card</option>
-                    <option value="Online">Online</option>
-                </select>
+                                    <select id="payment_method" name="payment_method" required>
+                                        <option value="">Select Payment Method</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Card">Card</option>
+                                    </select>
 
-                <!-- Location Selection -->
-                <label for="province">Province:</label>
-                <select id="province" name="province" required>
-                    <option value="">Select Province</option>
-                    <option value="Metro Manila">Metro Manila</option>
-                    <option value="Cebu">Cebu</option>
-                    <option value="Davao">Davao</option>
-                </select>
-
-                <label for="city">City:</label>
-                <select id="city" name="city" required>
-                    <option value="">Select City</option>
-                    <option value="Quezon City">Quezon City</option>
-                    <option value="Cebu City">Cebu City</option>
-                    <option value="Davao City">Davao City</option>
-                </select>
-
-                <label for="ward">Ward:</label>
-                <select id="ward" name="ward" required>
-                    <option value="">Select Ward</option>
-                    <option value="Ward 1">Ward 1</option>
-                    <option value="Ward 2">Ward 2</option>
-                    <option value="Ward 3">Ward 3</option>
-                </select>
-
-                <!-- Description -->
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="4" placeholder="Specify additional details (e.g., house color, landmarks)"></textarea>
+                                    <!-- Accepted Cards Section -->
+                                    <div id="accepted_cards" style="display: none;">
+                                        <label>Accepted Cards</label>
+                                        <div class="icon-container">
+                                            <i class="fa fa-cc-visa" style="color:navy;"></i>
+                                            <i class="fa fa-cc-amex" style="color:blue;"></i>
+                                            <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                                            <i class="fa fa-cc-discover" style="color:orange;"></i>
+                                        </div>
                                     </div>
+
+                                    <!-- Location Selection -->
+                                    <label for="province">Province:</label>
+                                    <select id="province" name="province" required>
+                                        <option value="">Select Province</option>
+                                        <option value="Metro Manila">Metro Manila</option>
+                                        <option value="Cebu">Cebu</option>
+                                        <option value="Davao">Davao</option>
+                                    </select>
+
+                                    <label for="city">City:</label>
+                                    <select id="city" name="city" required>
+                                        <option value="">Select City</option>
+                                        <option value="Quezon City">Quezon City</option>
+                                        <option value="Cebu City">Cebu City</option>
+                                        <option value="Davao City">Davao City</option>
+                                    </select>
+
+                                    <label for="ward">Ward:</label>
+                                    <select id="ward" name="ward" required>
+                                        <option value="">Select Ward</option>
+                                        <option value="Ward 1">Ward 1</option>
+                                        <option value="Ward 2">Ward 2</option>
+                                        <option value="Ward 3">Ward 3</option>
+                                    </select>
+
+                                    <!-- Description -->
+                                    <label for="description">Description:</label>
+                                    <textarea id="description" name="description" rows="4" placeholder="Specify additional details (e.g., house color, landmarks)"></textarea>
                                 </div>
                             </div>
 
@@ -90,12 +86,6 @@
                 </div>
             </form>
         </div>
-
-        <!-- Back to Cart Button -->
-        <form method="POST" action="{% url 'cart:reset_order_status' order_id %}" style="margin-top: 20px;">
-            {% csrf_token %}
-          
-        </form>
 
         <!-- Confirmation Modal -->
         {% if confirmation_message %}
@@ -109,5 +99,18 @@
         {% endif %}
     </main>
     {% include 'components/footer.html' %}
+
+    <!-- JavaScript -->
+    <script>
+        // Handle Payment Method Selection
+        document.getElementById('payment_method').addEventListener('change', function () {
+            const acceptedCards = document.getElementById('accepted_cards');
+            if (this.value === 'Card') {
+                acceptedCards.style.display = 'block';
+            } else {
+                acceptedCards.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

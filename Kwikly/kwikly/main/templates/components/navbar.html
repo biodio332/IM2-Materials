@@ -94,8 +94,19 @@
                 <a href="{% url 'store' %}">Kwikly</a>
             </div>
             <div class="search-bar">
-                <input type="text" placeholder="Search for products, store, and more">
-                <button>Search</button>
+                <form method="get" 
+                    action="{% if request.resolver_match.url_name == 'store' %}{% url 'store' %}
+                            {% elif request.resolver_match.url_name == 'store_detail' %}{% url 'store_detail' store_id=request.resolver_match.kwargs.store_id %}
+                            {% endif %}">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        placeholder="{% if request.resolver_match.url_name == 'store' %}Search for stores
+                                    {% elif request.resolver_match.url_name == 'store_detail' %}Search for products in this store
+                                    {% endif %}" 
+                        value="{{ request.GET.search|default:'' }}">
+                    <button type="submit">Search</button>
+                </form>
             </div>
             <div class="user-actions">  
                 {% if user.is_authenticated %}
@@ -106,7 +117,11 @@
                     </div>
                     {% else %}
                     <div class="cart">
-                       
+                        {% if request.resolver_match.url_name == 'store_detail' %}
+                            <a href="{% url 'cart:cart_summary' store_id=request.resolver_match.kwargs.store_id %}">
+                                <button>Cart</button>
+                            </a>
+                        {% endif %}
                         <a href="{% url 'account' %}"><button>Account</button></a>
                         <a href="{% url 'logout' %}"><button>Logout</button></a>
                     </div>
