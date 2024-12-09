@@ -10,7 +10,7 @@
 
 /* Header Styles */
 .page-header {
-    background-color: green;
+    background: linear-gradient(135deg, rgba(0, 100, 0, 0.8), rgba(0, 100, 0, 0.8), rgba(93, 221, 93, 0.8)); /* Reverse gradient on hover */ /* Gradient from darker green to lighter green */
     color: white;
     padding: 20px;
     font-size: 1.8rem;
@@ -39,8 +39,8 @@
 
 .stats-card {
     flex: 1 1 30%; /* Adjust to fit 3 cards in a row */
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: rgba(255, 255, 255, 0.9); /* White with opacity */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Light border with opacity */
     padding: 20px;
     border-radius: 8px;
     text-align: center;
@@ -77,7 +77,7 @@
 
 .actions-list .action-link {
     display: block;
-    background-color: #009688;
+    background: linear-gradient(135deg, rgba(0, 200, 0, 0.8), rgba(0, 100, 0, 0.8)); /* Reverse gradient on hover */ /* Gradient from darker green to lighter green */
     color: white;
     text-align: center;
     padding: 10px;
@@ -90,5 +90,5 @@
 }
 
 .actions-list .action-link:hover {
-    background-color: #00796b;
+    background: linear-gradient(135deg, rgba(0, 200, 0, 0.8), rgba(0, 100, 0, 0.8)); /* Reverse gradient on hover */ /* Reverse gradient on hover */
 }

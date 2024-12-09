@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="{% static 'account.css' %}">
 </head>
 <body>
-    {% include 'header.html' %}
+    {% include 'components/navbar.html' %}
 
     <div class="center-container">
         <h2>Your Transactions</h2>
 
         {% if transactions %}
-            <table>
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Transaction ID</th>
@@ -45,11 +45,8 @@
                 </tbody>
             </table>
         {% else %}
-            <p>No transactions to show.</p>
+            <span class="text-center">You have no transactions.</span>
         {% endif %}
-
-        <!-- Back button -->
-        <a href="{% url 'account' %}" class="back-link">Back to Account</a>
     </div>
 </body>
 </html>

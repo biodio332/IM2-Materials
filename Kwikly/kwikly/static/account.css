@@ -1,12 +1,79 @@
+/* Background Container */
+.background-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.background-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: inherit; /* Use the same background image */
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px); /* Apply blur effect to the background image */
+    z-index: 1; /* Ensure the blur effect is above the background image */
+}
+
+/* Dark overlay to make text readable */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2; /* Ensure the overlay is above the blur effect */
+}
+
 /* Center the content */
 .center-container {
     width: 80%;
-    margin: 0 auto;
+    margin: 200px auto;
     max-width: 800px;
     padding: 20px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.9); /* Add a semi-transparent background to make text readable */
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative; /* Add relative positioning */
+    padding-top: 100px; /* Add padding to make space for the profile picture */
+    z-index: 3; /* Ensure the content is above the overlay */
+}
+
+/* Profile Picture Section */
+.profile-picture-section {
+    position: absolute;
+    top: -75px; /* Adjust as needed to position the profile picture */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 4; /* Ensure the profile picture is above the content */
+}
+
+/* Profile Picture Styling */
+.profile-picture {
+    width: 130px; /* Adjust size as needed */
+    height: 130px; /* Ensure width and height are equal for a perfect circle */
+    border-radius: 50%; /* Makes the image a circle */
+    object-fit: cover; /* Ensures the image fills the circle and is cropped if necessary */
+    cursor: pointer; /* Makes the image clickable */
+    border: 2px solid #ccc; /* Optional: Add a border for better visibility */
+    transition: border-color 0.3s ease; /* Optional: Smooth transition on hover */
+}
+
+.profile-picture:hover {
+    border-color: #007BFF; /* Changes border color on hover for interactivity */
+}
+
+.username {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 20px;
 }
 
 /* Content Box Styling */
@@ -67,67 +134,88 @@ h2 {
     color: #666;
 }
 
-/* Button Styling */
-.submit-btn {
-    background-color: #4CAF50; /* Green background */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: auto;
-    margin: 0 auto; /* Center the button */
-    display: block; /* Make button a block element */
-}
-
-.submit-btn:hover {
-    background-color: darkgreen;
+/* Button Container */
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 5px; /* Gap between buttons */
+    justify-content: flex-start; /* Align buttons to the left */
+    justify-content: center;
+    
 }
 
 /* Form Styling */
-.change-password-form {
-    text-align: center;
-    margin-top: 20px;
+.button-container form {
+    display: inline-block; /* Display forms inline */
 }
 
-/* Text Formatting */
-strong {
-    color: #333;
-    font-weight: bold;
-}
-
-
-
-.submit-btn {
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
+/* Button Styling */
+.profile-card__button {
     padding: 10px 20px;
+    border: none;
     border-radius: 5px;
+    font-size: 1rem;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button--blue {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 20px;
+}
+
+.button--blue:hover {
+    background-color: darkgreen;
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+/* Submit Button */
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover {
-    background-color: #0056b3;
+    background-color: #45a049;
 }
 
-.profile-picture-section {
+/* Text Center */
+.text-center {
     text-align: center;
-    margin: 20px 0;
-}
-
-.profile-picture {
-    width: 150px; /* Adjust size as needed */
-    height: 150px; /* Ensure width and height are equal for a perfect circle */
-    border-radius: 50%; /* Makes the image a circle */
-    object-fit: cover; /* Ensures the image fills the circle and is cropped if necessary */
-    cursor: pointer; /* Makes the image clickable */
-    border: 2px solid #ccc; /* Optional: Add a border for better visibility */
-    transition: border-color 0.3s ease; /* Optional: Smooth transition on hover */
-}
-
-.profile-picture:hover {
-    border-color: #007BFF; /* Changes border color on hover for interactivity */
+    display: block;
+    margin-top: 20px;
 }

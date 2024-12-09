@@ -1,112 +1,114 @@
-@import url('https://fonts.googleapis.com/css?family=Droid+Serif:400,400italic|Montserrat:400,700');
-
 body {
     background-color: #fdf1ec;
+    font-family: "Montserrat", sans-serif;
 }
 
 .wrapper {
-    height: 420px;
-    width: 654px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     margin: 50px auto;
-    border-radius: 7px 7px 7px 7px;
-    -webkit-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 7px;
     box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+    max-width: 800px;
+    padding: 20px;
 }
 
 .product-img {
-    float: left;
-    height: 420px;
-    width: 327px;
+    flex: 1 1 327px;
+    max-width: 327px;
+    height: 100%; /* Adjusted height */
+    overflow: hidden;
+    border-radius: 7px 0 0 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .product-img img {
+    width: 100%;
+    height: auto; /* Ensure the aspect ratio is preserved */
+    object-fit: contain; /* Prevent stretching */
     border-radius: 7px 0 0 7px;
 }
 
 .product-info {
-    float: left;
-    height: 420px;
-    width: 327px;
-    border-radius: 0 7px 10px 7px;
+    flex: 1 1 327px;
+    max-width: 327px;
+    padding: 20px;
+    border-radius: 0 7px 7px 0;
     background-color: #ffffff;
 }
 
 .product-text {
-    height: 300px;
-    width: 327px;
+    margin-bottom: 20px;
 }
 
 .product-text h1 {
-    margin: 0 0 0 38px;
-    padding-top: 52px;
-    font-size: 35px;
+    margin: 0 0 10px;
+    font-size: 28px; /* Reduced size to fit better */
     color: #474747;
-}
-
-.product-text h1,
-.product-price-btn p {
     font-family: "Montserrat", sans-serif;
+    text-align: center;
 }
 
 .product-text h2 {
-    margin: 0 0 47px 38px;
-    font-size: 13px;
+    margin: 0 0 20px;
+    font-size: 18px;
     font-family: "Montserrat", sans-serif;
     font-weight: 400;
     text-transform: uppercase;
     color: #d2d2d2;
     letter-spacing: 0.2em;
+    text-align: center;
 }
 
 .product-text p {
-    height: 125px;
-    margin: 0 0 0 38px;
+    margin: 0 0 20px;
     font-family: "Montserrat", sans-serif;
     color: #8d8d8d;
     line-height: 1.7em;
     font-size: 15px;
     font-weight: lighter;
-    overflow: hidden;
+}
+
+.product-text .price {
+    font-size: 28px;
+    font-weight: bold;
+    color: black;
+    text-align: center;
 }
 
 .product-price-btn {
-    height: 103px;
-    width: 327px;
-    margin-top: 17px;
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
-/* Target the price specifically */
-.product-price-btn p {
-    display: inline-block;
-    position: absolute;
-    top: -13px;
-    height: 50px;
-    font-family: "Montserrat", sans-serif;
-    margin: 0 0 0 38px;
-    font-size: 35px;  /* Adjust font size for price */
-    font-weight: lighter;
+.product-price-btn label {
+    margin-right: 10px;
+    font-size: 16px;
     color: #474747;
 }
 
-/* More specific targeting of the price to adjust its size */
-.product-price-btn .price {
-    font-size: 35px; /* New price font size */
-    font-weight: bold; /* Optionally make the price bold */
+.product-price-btn input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
 }
 
-
-
 .product-price-btn button {
-    float: right;
     display: inline-block;
     height: 50px;
-    width: 176px;
-    margin: 0 40px 0 16px;
-    box-sizing: border-box;
-    border: transparent;
-    border-radius: 60px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 25px;
     font-family: "Montserrat", sans-serif;
     font-size: 14px;
     font-weight: 500;
@@ -116,6 +118,7 @@ body {
     background-color: #28a745; /* Green color */
     cursor: pointer;
     outline: none;
+    transition: background-color 0.3s ease;
 }
 
 .product-price-btn button:hover {

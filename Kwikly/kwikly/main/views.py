@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash, get_user_model
 from django.contrib import messages
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.forms import PasswordChangeForm
@@ -735,15 +735,11 @@ def edit_category(request, category_id):
 
 
 def delete_category(request, category_id):
-    """
-    View to delete a category.
-    """
+ 
+ 
     category = get_object_or_404(Category, category_id=category_id)
-    if request.method == 'POST':
-        category.delete()
-        return redirect('manage_categories')
-
-    return render(request, 'confirm_delete.html', {'category': category})
+    category.delete()
+    return redirect('manage_categories')
 
 @login_required
 def order_detail(request, order_id):

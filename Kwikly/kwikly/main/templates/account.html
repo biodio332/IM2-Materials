@@ -7,66 +7,63 @@
     <link rel="stylesheet" href="{% static 'account.css' %}">
 </head>
 <body>
-    {% include 'header.html' %}
-    <div class="center-container">
-        <div class="content-box">
-            <h2>Account Information</h2>
-            
-            <div class="user-info">
-                <p><strong>Username:</strong> {{ user.username }}</p>
-            
-                <div class="profile-picture-section">
-                    <h3>Profile Picture</h3>
-                    <form method="post" enctype="multipart/form-data" action="{% url 'update_profile_picture' %}" id="profile-picture-form">
-                        {% csrf_token %}
-                        <label for="profile-picture-input">
-                            {% if user.profile_picture %}
-                                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="profile-picture" id="profile-picture-display">
-                            {% else %}
-                                <img src="{% static 'default_profile.png' %}" alt="Default Profile" class="profile-picture" id="profile-picture-display">
-                            {% endif %}
-                        </label>
-                        <input type="file" name="profile_picture" id="profile-picture-input" accept="image/*" style="display: none;" onchange="document.getElementById('profile-picture-form').submit();">
-                    </form>
-                </div>
-                
-                {% if user.is_superuser %}
-                    <div class="admin-info">
-                        <h3>Admin Information</h3>
-                        <p><strong>Admin Privileges:</strong> Full access to manage users, products, and stores.</p>
-                        <p><strong>Staff Status:</strong> {{ user.is_staff|yesno:"Yes,No" }}</p>
-                        <p><strong>Superuser Status:</strong> {{ user.is_superuser|yesno:"Yes,No" }}</p>
-                    </div>
-                {% else %}
+
+    {% include 'components/navbar.html' %}
+
+    <div class="background-container" style="background-image: url({% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static 'default_profile.png' %}{% endif %});">
+        <div class="overlay"></div>
+        <div class="center-container">
+            <div class="profile-picture-section">
+                <form method="post" enctype="multipart/form-data" action="{% url 'update_profile_picture' %}" id="profile-picture-form">
+                    {% csrf_token %}
+                    <label for="profile-picture-input">
+                        {% if user.profile_picture %}
+                            <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="profile-picture" id="profile-picture-display">
+                        {% else %}
+                            <img src="{% static 'default_profile.png' %}" alt="Default Profile" class="profile-picture" id="profile-picture-display">
+                        {% endif %}
+                    </label>
+                    <input type="file" name="profile_picture" id="profile-picture-input" accept="image/*" style="display: none;" onchange="document.getElementById('profile-picture-form').submit();">
+                    <p class="username">{{ user.name }}</p>
+                </form>
+            </div>
+            <div class="content-box">
+                <div class="user-info">
+                    {% if user.is_superuser %}
+                        <div class="admin-info">
+                            <h3>Admin Information</h3>
+                            <p><strong>Admin Privileges:</strong> Full access to manage users, products, and stores.</p>
+                            <p><strong>Staff Status:</strong> {{ user.is_staff|yesno:"Yes,No" }}</p>
+                            <p><strong>Superuser Status:</strong> {{ user.is_superuser|yesno:"Yes,No" }}</p>
+                        </div>
+                    {% endif %}
+                    
                     <div class="account-info">
                         <h3>Account Information</h3>
-                        <p>User Debug Info: {{ user }}</p>
-                        <p>User ID: {{ user.customer_id }}</p>
-                        <p><strong>Name:</strong> {{ user.name }}</p>
+                        <p><strong>Username:</strong> {{ user.username }}</p>
                         <p><strong>Contact:</strong> {{ user.contact }}</p>
                         <p><strong>Address:</strong> {{ user.address }}</p>
                         <p><strong>Email:</strong> {{ user.email }}</p>
-                    </div>     
+                    </div>
                     
-                    <!-- View Transactions Button -->
-                    <form method="get" action="{% url 'view_transactions' %}" class="view-transactions-form">
-                        <button type="submit" class="view-transactions-btn">View Transactions</button>
-                    </form>
-
-                    <form method="post" action="{% url 'change_password' %}" class="change-password-form">
-                        {% csrf_token %}
-                        <button type="submit" class="submit-btn">Change Password</button>
-                    </form>
-                    
-                    {% if user.customer_id %}
-                        <form method="get" action="{% url 'edit_user' user.customer_id %}" class="edit-account-form">
-                            <button type="submit" class="submit-btn">Edit Account</button>
+                    <div class="button-container">
+                        <form method="get" action="{% url 'view_transactions' %}" class="view-transactions-form">
+                            <button type="submit" class="profile-card__button button--blue">View Transactions</button>
                         </form>
-                    {% else %}
-                        <p>Error: User ID is missing.</p>
-                    {% endif %}
-                {% endif %}
-            </div>            
+                        <form method="post" action="{% url 'change_password' %}" class="change-password-form">
+                            {% csrf_token %}
+                            <button type="submit" class="profile-card__button button--blue">Change Password</button>
+                        </form>
+                        {% if user.customer_id %}
+                            <form method="get" action="{% url 'edit_user' user.customer_id %}" class="edit-account-form">
+                                <button type="submit" class="profile-card__button button--blue">Edit Account</button>
+                            </form>
+                        {% else %}
+                            <p>Error: User ID is missing.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

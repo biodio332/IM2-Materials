@@ -90,10 +90,15 @@ header {
     border-radius: 4px;
 }
 
+.product-card a {
+    text-decoration: none;
+}
+
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
+    
 }
 
 .product-card {
@@ -124,7 +129,7 @@ header {
     font-size: 18px;
     font-weight: 500;
     color: #333; /* Ensuring text color consistency */
-    font-family: 'Droid Serif', serif; /* Apply Droid Serif to product name */
+    font-family: "Montserrat", sans-serif; /* Apply Droid Serif to product name */
 }
 
 .product-card p {
@@ -202,7 +207,7 @@ header {
 .carousel-item h4 {
     font-size: 0.85rem;
     color: #333;
-    font-family: 'Droid Serif', serif; /* Apply Droid Serif to carousel item titles */
+    font-family: "Montserrat", sans-serif; /* Apply Droid Serif to carousel item titles */
 }
 
 .carousel-control {
