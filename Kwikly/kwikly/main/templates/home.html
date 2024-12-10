@@ -9,98 +9,9 @@
 </head>
 <body>
 
-    <!-- Include Navbar -->
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Kwikly</title>
-        <style>
-            /* General Styles */
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-    
-            body {
-                font-family: "Montserrat", sans-serif;
-            }
-    
-            /* Header */
-            header {
-                background-color: white;
-                padding: 10px 0;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-    
-            .header-container {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                max-width: 1100px;
-                margin: 0 auto;
-                padding: 0 20px;
-            }
-    
-            .logo a {
-                font-size: 1.5rem;
-                font-weight: bold;
-                color: green;
-                text-decoration: none;
-            }
-    
-            .login a, .dashboard a, .cart a {
-                text-decoration: none;
-                color: white; 
-                font-weight: bold;
-            }
-    
-            /* Style the button as a link */
-            .login button, .dashboard button, .cart button {
-                background-color: green;
-                border: none;
-                padding: 8px 16px;
-                margin-left: 8px;
-                cursor: pointer;
-                border-radius: 20px;
-                font-weight: bold;
-                color: white;
-            }
-    
-            .login a, .dashboard a, .cart a {
-                display: inline-block;
-                text-decoration: none;
-            }
-    
-            .search-bar {
-                display: flex;
-                align-items: center;
-            }
-    
-            .search-bar input {
-                padding: 8px;
-                border: 1px solid #ccc;
-                border-radius: 10px;
-            }
-    
-            .search-bar button {
-                background-color: green;
-                color: white;
-                border: none;
-                padding: 8px 16px;
-                margin-left: 8px;
-                cursor: pointer;
-                border-radius: 20px;
-                font-weight: bold;
-            }
-        </style>
-    </head>
-    <body>
-        {% include 'components/navbar.html' %}
+    {% include 'components/navbar.html' %}
     <!-- source ~/DjangoProjects/myenv/bin/activate c -->
-    </body>
+    
     
 
     <!-- Store Section -->
@@ -181,44 +92,51 @@
         const sortSelect = document.querySelector('.sort-by select');
         let currentSlide = 0;
 
-        // Show the selected category's products
-        function filterProductsByCategory(category) {
-            productCards.forEach(card => {
-                const productCategory = card.getAttribute('data-category');
-                if (category === 'All' || productCategory === category) {
-                    card.style.display = 'block';  // Show the product
-                } else {
-                    card.style.display = 'none';  // Hide the product
-                }
-            });
+        // Filter products by category
+function filterProductsByCategory(category) {
+    productCards.forEach(card => {
+        const productCategory = card.getAttribute('data-category');
+        if (category === 'All' || productCategory === category) {
+            card.style.display = 'block'; // Show the product
+        } else {
+            card.style.display = 'none'; // Hide the product
         }
+    });
+}
 
-        // Show the slide based on the carousel index
-        function showSlide(index) {
-            carouselItems.forEach((item, i) => {
-                item.style.transform = `translateX(-${index * 100}%)`;
-            });
-        }
+// Show the slide based on the carousel index
+function showSlide(index) {
+    const totalSlides = carouselItems.length;
+    carouselInner.style.transform = `translateX(-${index * 100}%)`;
+    currentSlide = (index + totalSlides) % totalSlides; // Wrap around
+}
 
-        // Handle category clicks on the carousel
-        carouselItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const selectedCategory = item.getAttribute('data-category');
-                filterProductsByCategory(selectedCategory);  // Filter products based on selected category
-                // Update the sort dropdown to reflect the selected category
-                sortSelect.value = '';  // Reset the sort dropdown
-            });
-        });
+// Handle category clicks on the carousel
+carouselItems.forEach(item => {
+    item.addEventListener('click', () => {
+        const selectedCategory = item.getAttribute('data-category');
+        filterProductsByCategory(selectedCategory); // Filter products
+        // Highlight the selected category in the carousel
+        carouselItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+    });
+});
 
-        document.querySelector('.prev').addEventListener('click', () => {
-            currentSlide = (currentSlide > 0) ? currentSlide - 1 : carouselItems.length - 1;
-            showSlide(currentSlide);
-        });
+// Handle carousel navigation
+prevButton.addEventListener('click', () => {
+    currentSlide = (currentSlide > 0) ? currentSlide - 1 : carouselItems.length - 1;
+    showSlide(currentSlide);
+});
 
-        document.querySelector('.next').addEventListener('click', () => {
-            currentSlide = (currentSlide < carouselItems.length - 1) ? currentSlide + 1 : 0;
-            showSlide(currentSlide);
-        });
+nextButton.addEventListener('click', () => {
+    currentSlide = (currentSlide < carouselItems.length - 1) ? currentSlide + 1 : 0;
+    showSlide(currentSlide);
+});
+
+// Initialize carousel and filtering
+showSlide(currentSlide);
+carouselItems[0].classList.add('active');
+filterProductsByCategory('All'); // Show all products by default
     </script>
 </body>
 </html>

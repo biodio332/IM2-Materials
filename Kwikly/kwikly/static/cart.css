@@ -251,7 +251,7 @@ form.remove-item button.remove:hover{
   font-size: 1.25em;
 }
 .carts .items .cartSection input.qty {
-  width: 2em;
+  width: 3em;
   text-align: center;
   font-size: 1em;
   padding: .25em;
