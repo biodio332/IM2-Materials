@@ -34,7 +34,7 @@
 /* Center the content */
 .center-container {
     width: 80%;
-    margin: 200px auto;
+    margin: 100px auto;
     max-width: 800px;
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.9); /* Add a semi-transparent background to make text readable */
@@ -141,7 +141,6 @@ h2 {
     gap: 5px; /* Gap between buttons */
     justify-content: flex-start; /* Align buttons to the left */
     justify-content: center;
-    
 }
 
 /* Form Styling */
@@ -175,6 +174,7 @@ h2 {
     margin-bottom: 1rem;
     color: #212529;
     border-collapse: collapse;
+    text-align: center; /* Center all text in the table */
 }
 
 .table th,
@@ -185,7 +185,8 @@ h2 {
 }
 
 .table thead th {
-    vertical-align: bottom;
+    vertical-align: top;
+    text-align: center; 
     border-bottom: 2px solid #dee2e6;
 }
 
