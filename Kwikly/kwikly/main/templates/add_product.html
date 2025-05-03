@@ -1,0 +1,60 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'add_style.css' %}">
+<link rel="icon" type="image/x-icon" href="/media/uploads/products/kwikly.png">
+<header>
+    <!-- Header content here -->
+</header>
+
+<div class="center-container">
+    <h2>Add New Product</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Product Name Field -->
+        <div class="input-group">
+            <label for="product_name">Product Name:</label>
+            <input type="text" id="product_name" name="product_name" value="{{ product_name }}" required>
+        </div>
+
+        <!-- Price Field -->
+        <div class="input-group">
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" value="{{ price }}" step="0.01" required>
+        </div>
+
+        <!-- Category Field -->
+        <div class="input-group">
+            <label for="category">Category:</label>
+            <select id="category" name="category" required>
+                <option value="" disabled {% if not category_name %}selected{% endif %}>Please select a category</option>
+                {% for category in categories %}
+                    <option value="{{ category.type }}" {% if category.type == category_name %}selected{% endif %}>{{ category.type }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Store Field -->
+        <div class="input-group">
+            <label for="store">Store:</label>
+            <select id="store" name="store" required>
+                <option value="" disabled {% if not store_name %}selected{% endif %}>Please select a store</option>
+                {% for store in stores %}
+                    <option value="{{ store.store_name }}" {% if store.store_name == store_name %}selected{% endif %}>{{ store.store_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Product Image Field -->
+        <div class="input-group">
+            <label for="image">Product Image:</label>
+            <input type="file" id="image" name="image">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">Add Product</button>
+    </form>
+
+    <!-- Back to Manage Products Link -->
+    <a href="{% url 'manage_products' %}" class="back-link">Back to Manage Products</a>
+</div>

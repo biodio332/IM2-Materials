@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kwikly - Shopping</title>
+    <link rel="icon" type="image/x-icon" href="/media/uploads/products/kwikly.png">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="{% url 'home' %}">Kwikly</a>
+            </div>
+            <div class="search-bar">
+                <form method="get" action="">
+                    <input type="text" name="search" placeholder="Search" value="{{ search_query|default:'' }}">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            <div class="user-actions">  
+                {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                        <a href="{% url 'admin_dashboard' %}" class="admin-dashboard-btn">Admin Dashboard</a>
+                    {% else %}
+                    <div class="cart">
+                        <span>Shopping cart: ₱57.00</span>
+                        <a href="{% url 'account' %}">Account</a>
+                    {% endif %}
+                    <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <aside class="sidebar">
+            <form method="get" action="">
+                <button type="submit" class="filter-btn">Filter</button>
+                <div class="categories">
+                    <h3>All Categories</h3>
+                    <ul>
+                        {% for category in categories %}
+                            <li>
+                                <input type="radio" name="category" value="{{ category.type }}" 
+                                       {% if selected_category == category.type %}checked{% endif %}>
+                                {{ category.type }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </form>
+        </aside>
+
+        <section class="products">
+            <div class="sorting">
+                <span>{{ products.count }} Results Found</span>
+                <form method="get" class="sort-by">
+                    Sort by:
+                    <select name="sort" onchange="this.form.submit()">
+                        <option value="">Latest</option>
+                        <option value="low_to_high" {% if sort_option == 'low_to_high' %}selected{% endif %}>Price: Low to High</option>
+                        <option value="high_to_low" {% if sort_option == 'high_to_low' %}selected{% endif %}>Price: High to Low</option>
+                    </select>
+                </form>
+            </div>
+            
+            <div class="product-grid">
+                {% for product in products %}
+                    <div class="product-card">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        <h4>{{ product.product_name }}</h4>
+                        <p>₱{{ product.price }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</body>
+</html>

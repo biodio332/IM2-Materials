@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="icon" type="image/x-icon" href="/media/uploads/products/kwikly.png">
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+</head>
+<body>
+    {% include 'header.html' %}
+    
+    <!-- Main Content -->
+    <div class="center-container">
+        <div class="content-box">
+            <h2>Welcome to Kwikly</h2>
+            
+            {% if messages %}
+                <div class="alert">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Login Form -->
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="input-group">
+                    <button type="submit" class="submit-btn">Login</button>
+                </div>
+            </form>
+
+            <!-- Register Link -->
+            <div class="register-link">
+                <p>Not yet a user?</p>
+                <a href="{% url 'register' %}" class="register-btn">Register</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

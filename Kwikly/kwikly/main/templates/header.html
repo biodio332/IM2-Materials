@@ -1,0 +1,27 @@
+{% load static %}
+<link rel="icon" type="image/x-icon" href="/media/uploads/products/kwikly.png">
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: #f5f5f5;">
+    <div>
+        <div class="logo">
+            <a href="{% url 'home' %}">Kwikly</a>
+        </div>
+    </div>
+    <div>
+        {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+                <!-- If the user is a superuser -->
+                <a href="{% url 'admin_dashboard' %}">Admin Dashboard</a> |
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <!-- If the user is not a superuser -->
+                <a href="{% url 'account' %}">Account</a> |
+                <a href="{% url 'logout' %}">Logout</a>
+            {% endif %}
+        {% else %}
+            <!-- If the user is not authenticated -->
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </div>
+</header>
+

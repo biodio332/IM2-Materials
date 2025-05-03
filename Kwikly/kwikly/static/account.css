@@ -1,0 +1,99 @@
+/* Center the content */
+.center-container {
+    width: 80%;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Content Box Styling */
+.content-box {
+    padding: 20px;
+}
+
+/* Title Styling */
+h2 {
+    color: #4CAF50; /* Green title */
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* User Info */
+.user-info p {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Admin Info Section */
+.admin-info {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.admin-info h3 {
+    color: #4CAF50; /* Green for admin section heading */
+    margin-bottom: 10px;
+}
+
+.admin-info p {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Account Info Section */
+.account-info {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.account-info h3 {
+    color: #4CAF50; /* Green for account section heading */
+    margin-bottom: 10px;
+}
+
+.account-info p {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Button Styling */
+.submit-btn {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: auto;
+    margin: 0 auto; /* Center the button */
+    display: block; /* Make button a block element */
+}
+
+.submit-btn:hover {
+    background-color: darkgreen;
+}
+
+/* Form Styling */
+.change-password-form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Text Formatting */
+strong {
+    color: #333;
+    font-weight: bold;
+}
